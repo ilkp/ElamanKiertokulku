@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 //Moi T AKu!
+//Moi T Ile
 public class ElämänKiertokulku extends Application {
     
     @Override
