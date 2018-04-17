@@ -4,15 +4,16 @@ package elämänkiertokulku.simulaatio;
 
 public class Elain {
     private int id;
-    private Ruutu ruutu;
-    private int ruokatilanne;
-    private String tavoite;
+    protected Ruutu ruutu;
+    protected int ruokatilanne;
+    protected ElaimenTavoite tavoite;
     
     public Elain(int id, Ruutu ruutu) {
         this.id = id;
         this.ruutu = ruutu;
     }
     
+    //Alla getterit ja setterit
     public int getId() {
         return id;
     }
@@ -33,12 +34,21 @@ public class Elain {
         return ruokatilanne;
     }
 
+    //Käytä vain testaukseen. Simulaatiossa käytä 'vahennaRuoka(int muutos)' tai 'lisaaRuoka(int muutos)'
     public void setRuokatilanne(int ruokatilanne) {
         this.ruokatilanne = ruokatilanne;
     }
     
+    public ElaimenTavoite getTavoite() {
+        return this.tavoite;
+    }
+    
+    public void setTavoite(ElaimenTavoite tavoite) {
+        this.tavoite = tavoite;
+    }
     
     
+    //Alla omat metodit
     public void lisaaRuoka(int muutos) {
         if (this.ruokatilanne + muutos < 100) {
             this.ruokatilanne += muutos;
