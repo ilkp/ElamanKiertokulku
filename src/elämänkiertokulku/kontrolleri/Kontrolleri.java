@@ -40,6 +40,12 @@ public class Kontrolleri {
         this.idLaskuri = idLaskuri;
     }
     
+    public void ajaLaumat() {
+        this.laumat.forEach((lauma) -> {
+            lauma.ajaLauma();
+        });
+    }
+    
     public int seuraavaId() {
         this.idLaskuri++;
         return this.idLaskuri - 1;

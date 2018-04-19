@@ -21,13 +21,13 @@ public class ElämänKiertokulkuTesti {
         
         kontrolleri.getKartta().alusta();
         
-        kontrolleri.lisaaLauma(new Lauma(kontrolleri.seuraavaId(), kontrolleri.getKartta().getRuudut()[0][0]));
-        kontrolleri.lisaaLauma(new Lauma(kontrolleri.seuraavaId(), kontrolleri.getKartta().getRuudut()[1][1]));
+        kontrolleri.lisaaLauma(new Lauma(kontrolleri.seuraavaId(), kontrolleri.getKartta().getRuudut()[0][0], kontrolleri.getKartta().getRuudut()));
+        kontrolleri.lisaaLauma(new Lauma(kontrolleri.seuraavaId(), kontrolleri.getKartta().getRuudut()[1][1], kontrolleri.getKartta().getRuudut()));
         
         List<Lauma> laumat = kontrolleri.getLaumat();
         
         laumat.forEach((lauma) -> {
-            lauma.lisaaJasen(new Elain(kontrolleri.seuraavaId(), lauma.getRuutu()));
+            lauma.lisaaJasen(new Elain(kontrolleri.seuraavaId(), lauma.getRuutu(), lauma));
         });
         
         kontrolleri.getKartta().piirraKartta();

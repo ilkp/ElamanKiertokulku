@@ -5,6 +5,6 @@ package elämänkiertokulku.simulaatio;
 
 public enum LaumanTavoite {
     ODOTA,
-    LOYDARUOKAA,
+    LIIKU_RUOKA,
     PAKENE;
 }
