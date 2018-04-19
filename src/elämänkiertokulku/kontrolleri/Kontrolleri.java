@@ -5,8 +5,10 @@ import elämänkiertokulku.simulaatio.Kartta;
 import elämänkiertokulku.simulaatio.Lauma;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Kontrolleri {
+    private Random random = new Random();
     private Kartta kartta;
     private int idLaskuri = 1;
     private List<Lauma> laumat = new ArrayList();
@@ -49,5 +51,9 @@ public class Kontrolleri {
     public int seuraavaId() {
         this.idLaskuri++;
         return this.idLaskuri - 1;
+    }
+    public int randomizer(){
+        int luku = random.nextInt(100);
+        return luku;
     }
 }
