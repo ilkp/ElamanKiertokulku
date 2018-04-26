@@ -62,6 +62,9 @@ public class Lauma {
         elain.getRuutu().lisaaElain(elain);
         this.jasenet.add(elain);
     }
+    public void elaimenKoordinaatti(Elain elain) {
+        elain.setRuutu(ruutu);
+    }
     
     public void maaritaLaumanTavoite() {
     }
