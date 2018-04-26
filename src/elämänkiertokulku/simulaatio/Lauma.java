@@ -7,10 +7,14 @@ import java.util.List;
 
 public class Lauma {
     private int id;
-    private Ruutu ruutu;
-    private final Ruutu[][] ruudukko;
+    protected Ruutu ruutu;
+    protected final Ruutu[][] ruudukko;
     private List<Elain> jasenet = new ArrayList();
     private List<Elain> poistettavat = new ArrayList();
+    protected LaumanTavoite tavoite;
+    
+    protected final int ALUEEN_KOKO = 4;
+    protected final int RUOAN_RAJAARVO = 20;
     
     public Lauma(int id, Ruutu ruutu, Ruutu[][] ruudukko) {
         this.id = id;
@@ -57,6 +61,13 @@ public class Lauma {
     public void lisaaJasen(Elain elain) {
         elain.getRuutu().lisaaElain(elain);
         this.jasenet.add(elain);
+    }
+    
+    public void maaritaLaumanTavoite() {
+    }
+    
+    public int ruoanMaaraAlueella(int x, int y) {
+        return 0;
     }
     
     public void siirraPoistettaviin(Elain jasen) {
