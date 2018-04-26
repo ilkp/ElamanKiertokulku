@@ -3,7 +3,7 @@ package elämänkiertokulku.simulaatio;
 
 
 public class Kasvinsyoja extends Elain {
-
+    
     public Kasvinsyoja(int id, Ruutu ruutu, Lauma lauma) {
         super(id, ruutu, lauma);
     }

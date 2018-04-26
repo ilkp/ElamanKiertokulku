@@ -104,6 +104,7 @@ public class Elain {
         }
     }
     
+    // tarkistaa onko eläin oman lauman alueella
     public boolean onkoLaumanAlueella() {
         int xKoord = this.ruutu.getxKoord();
         int yKoord = this.ruutu.getyKoord();
