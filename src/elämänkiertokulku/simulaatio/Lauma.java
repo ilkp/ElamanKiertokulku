@@ -7,10 +7,11 @@ import java.util.List;
 
 public class Lauma {
     private int id;
-    protected Ruutu ruutu;
-    protected final Ruutu[][] ruudukko;
-    private List<Elain> jasenet = new ArrayList();
     private List<Elain> poistettavat = new ArrayList();
+    protected Ruutu ruutu;
+    protected Ruutu tavoiteRuutu;
+    protected final Ruutu[][] ruudukko;
+    protected List<Elain> jasenet = new ArrayList();
     protected LaumanTavoite tavoite;
     
     protected final int ALUEEN_KOKO = 4;
@@ -52,10 +53,6 @@ public class Lauma {
     
     
     public void ajaLauma() {
-        this.jasenet.forEach((elain) -> {
-            elain.ajaElain();
-        });
-        tyhjennaPoistettavat();
     }
     
     public void lisaaJasen(Elain elain) {
@@ -63,11 +60,22 @@ public class Lauma {
         this.jasenet.add(elain);
     }
     
+    // yMuutos vaikuttaa xMuutokseen, koska vinoon liikkuminen on mahdollista
+    public int etaisyysRuudusta(Ruutu ruutu) {
+        int yMuutos = ruutu.getyKoord() - this.ruutu.getyKoord();
+        int xMuutos = ruutu.getxKoord() - this.ruutu.getxKoord() - yMuutos;
+        return yMuutos + xMuutos;
+    }
+    
     public void maaritaLaumanTavoite() {
     }
     
     public int ruoanMaaraAlueella(int x, int y) {
         return 0;
+    }
+    
+    public Ruutu seuraavanRuokapaikanSijainti() {
+        return null;
     }
     
     public void siirraPoistettaviin(Elain jasen) {
