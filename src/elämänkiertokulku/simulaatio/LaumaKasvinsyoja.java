@@ -9,16 +9,62 @@ public class LaumaKasvinsyoja extends Lauma {
     }
     
     @Override
+    public void ajaLauma() {
+        this.jasenet.forEach((elain) -> {
+            elain.ajaElain();
+        });
+        
+        maaritaLaumanTavoite();
+        switch (this.tavoite) {
+            case PAKENE:
+                // implement
+                break;
+            case ODOTA:
+                // implement
+                break;
+            case UUSI_RUOKAPAIKKA:
+                this.tavoiteRuutu = seuraavanRuokapaikanSijainti();
+                // ei breakkiä -> uuden ruudun laskemisen jälkeen liikutaan myös
+            case LIIKU_RUOKA:
+                // implement
+                int liikkeenXSuunta = this.tavoiteRuutu.getxKoord() - this.ruutu.getxKoord();
+                if (liikkeenXSuunta != 0) {
+                    liikkeenXSuunta /= Math.abs(liikkeenXSuunta);
+                }
+                
+                int liikkeenYSuunta = this.tavoiteRuutu.getyKoord() - this.ruutu.getyKoord();
+                if (liikkeenYSuunta != 0) {
+                    liikkeenYSuunta /= Math.abs(liikkeenYSuunta);
+                }
+                
+                int uusiX = this.ruutu.getxKoord() + liikkeenXSuunta;
+                int uusiY = this.ruutu.getyKoord() + liikkeenYSuunta;
+                
+                Ruutu seuraavaRuutu = this.ruudukko[uusiX][uusiY];
+                this.setRuutu(seuraavaRuutu);
+                
+                if (this.ruutu == this.tavoiteRuutu) {
+                    this.tavoiteRuutu = null;
+                }
+                break;
+        }
+        tyhjennaPoistettavat();
+    }
+    
+    @Override
     public void maaritaLaumanTavoite() {
         if (1 == 0) {
             this.tavoite = LaumanTavoite.PAKENE; //alueella lihansyöjiä -> täytyy implementoida
+        } else if (this.tavoiteRuutu != null) {
+            this.tavoite = LaumanTavoite.LIIKU_RUOKA;
         } else if (ruoanMaaraAlueella(this.ruutu.getxKoord(), this.ruutu.getyKoord()) < this.RUOAN_RAJAARVO) {
             this.tavoite = LaumanTavoite.ODOTA;
         } else {
-            this.tavoite = LaumanTavoite.LIIKU_RUOKA;
+            this.tavoite = LaumanTavoite.UUSI_RUOKAPAIKKA;
         }
     }
     
+    @Override
     public Ruutu seuraavanRuokapaikanSijainti() {
         double parasArvo = 0;
         int ruoanMaara = 0;
@@ -27,12 +73,17 @@ public class LaumaKasvinsyoja extends Lauma {
         
         for (int i = this.ALUEEN_KOKO; i < this.ruudukko.length - this.ALUEEN_KOKO; i++) {
             for (int j = this.ALUEEN_KOKO; j < this.ruudukko[i].length - this.ALUEEN_KOKO; j++) {
-                ruoanMaara = ruoanMaaraAlueella(i , j);
-                if (ruoanMaara > parasArvo) {
-                    //palautettava = this.ruudukko[];
+                if (i != this.ruutu.getxKoord() && j != this.ruutu.getyKoord()) {
+                    ruoanMaara = ruoanMaaraAlueella(i , j);
+                    ruudunArvo = ruoanMaara / this.etaisyysRuudusta(this.ruudukko[i][j]);
+                    if (ruudunArvo > parasArvo) {
+                        palautettava = this.ruudukko[i][j];
+                        parasArvo = ruudunArvo;
+                    }
                 }
             }
         }
+        return palautettava;
     }
     
     @Override
