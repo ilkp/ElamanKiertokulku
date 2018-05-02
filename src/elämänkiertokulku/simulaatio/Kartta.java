@@ -29,12 +29,12 @@ public class Kartta {
         String piirrettava = "";
         for (int i = 0; i < this.ruudut.length; i++) {
             for (int j = 0; j < this.ruudut[i].length; j++) {
-                if (this.ruudut[i][j].getRuoka() < 100) {
-                    piirrettava += "[ "+this.ruudut[i][j].getRuoka()+"]";
-                } else if (this.ruudut[i][j].getRuoka() < 10) {
-                    piirrettava += "[  "+this.ruudut[i][j].getRuoka()+"]";
+                if (this.ruudut[i][j].getKasviruoka() < 100) {
+                    piirrettava += "[ "+this.ruudut[i][j].getKasviruoka()+"]";
+                } else if (this.ruudut[i][j].getKasviruoka() < 10) {
+                    piirrettava += "[  "+this.ruudut[i][j].getKasviruoka()+"]";
                 } else {
-                    piirrettava += "["+this.ruudut[i][j].getRuoka()+"]";
+                    piirrettava += "["+this.ruudut[i][j].getKasviruoka()+"]";
                 }
             }
             piirrettava += "\n";

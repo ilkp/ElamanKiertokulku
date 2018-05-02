@@ -8,7 +8,8 @@ import java.util.List;
 public class Ruutu {
     private final int xKoord;
     private final int yKoord;
-    private int ruoka;
+    private int kasviruoka;
+    private int liharuoka;
     private List laumat = new ArrayList();
     private List elaimet = new ArrayList();
 
@@ -16,7 +17,7 @@ public class Ruutu {
         this.xKoord = xKoord;
         this.yKoord = yKoord;
         //Ruoan testaamiseksi toistaiseksi 100
-        this.ruoka = 100;
+        this.kasviruoka = 100;
     }
 
     public int getxKoord() {
@@ -27,13 +28,22 @@ public class Ruutu {
         return yKoord;
     }
     
-    public int getRuoka() {
-        return ruoka;
+    public int getKasviruoka() {
+        return this.kasviruoka;
     }
-
-    public void setRuoka(int ruoka) {
-        this.ruoka = ruoka;
+    
+    public void setKasviruoka(int maara) {
+        this.kasviruoka = maara;
     }
+    
+    public int getLiharuoka() {
+        return this.liharuoka;
+    }
+    
+    public void setLiharuoka(int maara) {
+        this.liharuoka = maara;
+    }
+    
 
     public List getLaumat() {
         return laumat;
@@ -67,24 +77,36 @@ public class Ruutu {
         return false;
     }
     
-    public void lisaaRuoka(int maara) {
-        if (this.ruoka + maara < 100) {
-            this.ruoka += maara;
+    public void lisaaKasviruoka(int maara) {
+        if (this.kasviruoka + maara < 100) {
+            this.kasviruoka += maara;
         } else {
-            this.ruoka = 100;
+            this.kasviruoka = 100;
         }
     }
     
-    public void vahennaRuoka(int maara) {
-        if (this.ruoka - maara > 0) {
-            this.ruoka -= maara;
+    public void vahennaKasviRuoka(int maara) {
+        if (this.kasviruoka - maara > 0) {
+            this.kasviruoka -= maara;
         } else {
-            this.ruoka = 0;
+            this.kasviruoka = 0;
+        }
+    }
+    
+    public void lisaaLiharuoka (int maara) {
+        this.liharuoka += maara;
+    }
+    
+    public void vahennaLiharuoka (int maara) {
+        if (this.liharuoka - maara > 0) {
+            this.liharuoka -= maara;
+        } else {
+            this.liharuoka = 0;
         }
     }
     
     @Override
     public String toString() {
-        return ""+this.ruoka;
+        return "";
     }
 }

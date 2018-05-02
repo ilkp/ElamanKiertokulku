@@ -1,6 +1,10 @@
 
 package elämänkiertokulku;
 
+import elämänkiertokulku.kontrolleri.Kello;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,6 +22,10 @@ public class ElämänKiertokulku extends Application {
         
         stage.setScene(scene);
         stage.show();
+        
+        Kello kello = new Kello();
+        ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+        executor.scheduleAtFixedRate(kello.getRunnable(), 0, 1, TimeUnit.SECONDS);
     }
 
     public static void main(String[] args) {
