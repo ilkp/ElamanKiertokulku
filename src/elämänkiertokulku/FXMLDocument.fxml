@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.canvas.Canvas?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elämänkiertokulku.FXMLDocumentController">
-   <center>
-      <Canvas fx:id="mainCanvas" height="200.0" width="200.0" BorderPane.alignment="TOP_LEFT" />
-   </center>
-</BorderPane>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elämänkiertokulku.FXMLDocumentController">
+   <children>
+      <SplitPane dividerPositions="0.8644986449864499" orientation="VERTICAL" prefHeight="740.0" prefWidth="640.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="640.0" prefWidth="640.0" SplitPane.resizableWithParent="false">
+               <children>
+                  <Canvas id="primaryCanvas" fx:id="primaryCanvas" height="640.0" width="640.0" />
+                  <Label fx:id="label" alignment="CENTER" contentDisplay="CENTER" layoutX="293.0" layoutY="307.0" text="CENTER" />
+               </children>
+            </AnchorPane>
+          <AnchorPane maxHeight="100.0" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="640.0" />
+        </items>
+      </SplitPane>
+   </children>
+</VBox>
