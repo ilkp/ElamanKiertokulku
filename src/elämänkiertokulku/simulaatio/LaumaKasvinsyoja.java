@@ -10,43 +10,51 @@ public class LaumaKasvinsyoja extends Lauma {
     
     @Override
     public void ajaLauma() {
-        this.jasenet.forEach((elain) -> {
+        this.getJasenet().forEach((elain) -> {
             elain.ajaElain();
         });
         
         maaritaLaumanTavoite();
-        switch (this.tavoite) {
+        switch (this.getTavoite()) {
             case PAKENE:
-                // implement
+                // IMPLEMENT
                 break;
             case ODOTA:
-                // implement
+                // IMPLEMENT
                 break;
             case UUSI_RUOKAPAIKKA:
-                this.tavoiteRuutu = seuraavanRuokapaikanSijainti();
+                this.setTavoiteRuutu(seuraavanRuokapaikanSijainti());
                 // ei breakkiä -> uuden ruudun laskemisen jälkeen liikutaan myös
             case LIIKU_RUOKA:
-                // implement
-                int liikkeenXSuunta = this.tavoiteRuutu.getxKoord() - this.ruutu.getxKoord();
-                if (liikkeenXSuunta != 0) {
-                    liikkeenXSuunta /= Math.abs(liikkeenXSuunta);
+                if (this.getLiikkeenVaihe() >= this.getNopeus()) {
+                    int liikkeenXSuunta = this.getTavoiteRuutu().getxKoord() - this.getRuutu().getxKoord();
+                    if (liikkeenXSuunta != 0) {
+                        liikkeenXSuunta /= Math.abs(liikkeenXSuunta);
+                    }
+
+                    int liikkeenYSuunta = this.getTavoiteRuutu().getyKoord() - this.getRuutu().getyKoord();
+                    if (liikkeenYSuunta != 0) {
+                        liikkeenYSuunta /= Math.abs(liikkeenYSuunta);
+                    }
+
+                    int uusiX = this.getRuutu().getxKoord() + liikkeenXSuunta;
+                    int uusiY = this.getRuutu().getyKoord() + liikkeenYSuunta;
+
+                    Ruutu seuraavaRuutu = this.getRuudukko()[uusiX][uusiY];
+                    this.setRuutu(seuraavaRuutu);
+
+                    if (this.getRuutu() == this.getTavoiteRuutu()) {
+                        this.setTavoiteRuutu(null);
+                    }
+                    this.setLiikkeenVaihe(0);
+                    break;
+                } else {
+                    this.setLiikkeenVaihe(this.getLiikkeenVaihe()+1);
                 }
                 
-                int liikkeenYSuunta = this.tavoiteRuutu.getyKoord() - this.ruutu.getyKoord();
-                if (liikkeenYSuunta != 0) {
-                    liikkeenYSuunta /= Math.abs(liikkeenYSuunta);
+                if (this.getRuutu().equals(this.getTavoiteRuutu())) {
+                    this.setTavoiteRuutu(null);
                 }
-                
-                int uusiX = this.ruutu.getxKoord() + liikkeenXSuunta;
-                int uusiY = this.ruutu.getyKoord() + liikkeenYSuunta;
-                
-                Ruutu seuraavaRuutu = this.ruudukko[uusiX][uusiY];
-                this.setRuutu(seuraavaRuutu);
-                
-                if (this.ruutu == this.tavoiteRuutu) {
-                    this.tavoiteRuutu = null;
-                }
-                break;
         }
         tyhjennaPoistettavat();
     }
@@ -54,30 +62,32 @@ public class LaumaKasvinsyoja extends Lauma {
     @Override
     public void maaritaLaumanTavoite() {
         if (1 == 0) {
-            this.tavoite = LaumanTavoite.PAKENE; //alueella lihansyöjiä -> täytyy implementoida
-        } else if (this.tavoiteRuutu != null) {
-            this.tavoite = LaumanTavoite.LIIKU_RUOKA;
-        } else if (ruoanMaaraAlueella(this.ruutu.getxKoord(), this.ruutu.getyKoord()) < this.RUOAN_RAJAARVO) {
-            this.tavoite = LaumanTavoite.ODOTA;
+            this.setTavoite(LaumanTavoite.PAKENE);
+            // IMPLEMENT
+        } else if (this.getTavoiteRuutu() != null) {
+            this.setTavoite(LaumanTavoite.LIIKU_RUOKA);
+        } else if (ruoanMaaraAlueella(this.getRuutu().getxKoord(), this.getRuutu().getyKoord()) > this.getRuoanRajaarvo()) {
+            this.setTavoite(LaumanTavoite.ODOTA);
         } else {
-            this.tavoite = LaumanTavoite.UUSI_RUOKAPAIKKA;
+            this.setTavoite(LaumanTavoite.UUSI_RUOKAPAIKKA);
         }
     }
     
+    // Metodia käytetään, kun lauman alueelta loppuu ruoka, ja lauma halutaan siirtää uuteen ruutuun.
     @Override
     public Ruutu seuraavanRuokapaikanSijainti() {
         double parasArvo = 0;
         int ruoanMaara = 0;
         double ruudunArvo = 0;
-        Ruutu palautettava = this.ruudukko[0][0];
+        Ruutu palautettava = this.getRuudukko()[0][0];
         
-        for (int i = this.ALUEEN_KOKO; i < this.ruudukko.length - this.ALUEEN_KOKO; i++) {
-            for (int j = this.ALUEEN_KOKO; j < this.ruudukko[i].length - this.ALUEEN_KOKO; j++) {
-                if (i != this.ruutu.getxKoord() && j != this.ruutu.getyKoord()) {
+        for (int i = this.getAlueenKoko(); i < this.getRuudukko().length - this.getAlueenKoko(); i++) {
+            for (int j = this.getAlueenKoko(); j < this.getRuudukko()[i].length - this.getAlueenKoko(); j++) {
+                if (i != this.getRuutu().getxKoord() && j != this.getRuutu().getyKoord()) {
                     ruoanMaara = ruoanMaaraAlueella(i , j);
-                    ruudunArvo = ruoanMaara / this.etaisyysRuudusta(this.ruudukko[i][j]);
+                    ruudunArvo = ruoanMaara / this.etaisyysRuudusta(this.getRuudukko()[i][j]);
                     if (ruudunArvo > parasArvo) {
-                        palautettava = this.ruudukko[i][j];
+                        palautettava = this.getRuudukko()[i][j];
                         parasArvo = ruudunArvo;
                     }
                 }
@@ -89,11 +99,11 @@ public class LaumaKasvinsyoja extends Lauma {
     @Override
     public int ruoanMaaraAlueella(int x, int y) {
         int maara = 0;
-        for (int i = -this.ALUEEN_KOKO; i < this.ALUEEN_KOKO + 1; i++) {
-            for (int j = -this.ALUEEN_KOKO; j < this.ALUEEN_KOKO + 1; j++) {
+        for (int i = -this.getAlueenKoko(); i < this.getAlueenKoko() + 1; i++) {
+            for (int j = -this.getAlueenKoko(); j < this.getAlueenKoko() + 1; j++) {
                 int xKoord = x + i;
                 int yKoord = y + j;
-                maara += this.ruudukko[xKoord][yKoord].getKasviruoka();
+                maara += this.getRuudukko()[xKoord][yKoord].getKasviruoka();
             }
         }
         return maara;

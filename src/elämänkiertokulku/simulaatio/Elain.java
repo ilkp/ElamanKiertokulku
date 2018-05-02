@@ -5,11 +5,11 @@ package elämänkiertokulku.simulaatio;
 public class Elain {
     private int id;
     private double kuolintodennakoisyys;
-    protected final Lauma omaLauma;
-    protected Ruutu ruutu;
-    protected Ruutu tavoiteRuutu;
-    protected int ruokatilanne;
-    protected ElaimenTavoite tavoite;
+    private final Lauma omaLauma;
+    private Ruutu ruutu;
+    private Ruutu tavoiteRuutu;
+    private int ruokatilanne;
+    private ElaimenTavoite tavoite;
     
     public Elain(int id, Ruutu ruutu, Lauma lauma) {
         this.id = id;
@@ -59,14 +59,38 @@ public class Elain {
     public void setTavoiteRuutu(Ruutu tavoiteRuutu) {
         this.tavoiteRuutu = tavoiteRuutu;
     }
+
+    public double getKuolintodennakoisyys() {
+        return kuolintodennakoisyys;
+    }
+
+    public void setKuolintodennakoisyys(double kuolintodennakoisyys) {
+        this.kuolintodennakoisyys = kuolintodennakoisyys;
+    }
+    
+    public Lauma getLauma() {
+        return this.omaLauma;
+    }
     
     
     
     
     //Alla omat metodit
+    
+    // Metodin nimeämistä varten, käyttö aliluokassa
+    public void maaritaTavoite(){}
+    
+    // Metodia kutsuu eläimen oma lauma. ajaElain testaa kuoleeko eläin ja tekee tarvittavat toimenpiteet.
     public void ajaElain() {
+        
         if (!kuoleekoElain()) {
+            maaritaTavoite();
             
+            if (this.tavoite == ElaimenTavoite.PAKENE) {
+                // implement
+            } else if (this.tavoite == ElaimenTavoite.LIIKU_LAHIN_RUOKA) {
+                
+            }
             
         } else {
             tapaElain();
@@ -85,7 +109,7 @@ public class Elain {
     public void tapaElain() {
         this.ruutu.lisaaLiharuoka(100);
         this.omaLauma.siirraPoistettaviin(this);
-        this.ruutu = null;
+        this.ruutu.getElaimet().remove(this);
     }
     
     public void lisaaRuoka(int muutos) {
@@ -106,15 +130,14 @@ public class Elain {
     
     // tarkistaa onko eläin oman lauman alueella
     public boolean onkoLaumanAlueella() {
+        int alueenKoko = this.omaLauma.getAlueenKoko();
         int xKoord = this.ruutu.getxKoord();
         int yKoord = this.ruutu.getyKoord();
         int laumanXKoord = this.omaLauma.getRuutu().getxKoord();
         int laumanYKoord = this.omaLauma.getRuutu().getyKoord();
-        if (xKoord > laumanXKoord - 4 && xKoord < laumanXKoord + 4 && yKoord > laumanYKoord - 4 && yKoord < laumanYKoord + 4) {
-            return true;
-        }
-        return false;
+        return xKoord > laumanXKoord - alueenKoko && xKoord < laumanXKoord + alueenKoko && yKoord > laumanYKoord - alueenKoko && yKoord < laumanYKoord + alueenKoko;
     }
+    
     
     @Override
     public String toString() {

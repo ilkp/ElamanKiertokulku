@@ -16,6 +16,7 @@ public class ElämänKiertokulku extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
+        /*
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
         
         Scene scene = new Scene(root);
@@ -26,6 +27,7 @@ public class ElämänKiertokulku extends Application {
         Kello kello = new Kello();
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
         executor.scheduleAtFixedRate(kello.getRunnable(), 0, 1, TimeUnit.SECONDS);
+        */
     }
 
     public static void main(String[] args) {

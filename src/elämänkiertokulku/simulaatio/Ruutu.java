@@ -8,16 +8,17 @@ import java.util.List;
 public class Ruutu {
     private final int xKoord;
     private final int yKoord;
+    private boolean kasvattaakoRuokaa;
     private int kasviruoka;
     private int liharuoka;
     private List laumat = new ArrayList();
     private List elaimet = new ArrayList();
 
-    public Ruutu(int xKoord, int yKoord) {
+    public Ruutu(int xKoord, int yKoord, int ruoka, boolean kasvaakoRuoka) {
         this.xKoord = xKoord;
         this.yKoord = yKoord;
-        //Ruoan testaamiseksi toistaiseksi 100
-        this.kasviruoka = 100;
+        this.kasviruoka = ruoka;
+        this.kasvattaakoRuokaa = kasvaakoRuoka;
     }
 
     public int getxKoord() {
@@ -44,7 +45,6 @@ public class Ruutu {
         this.liharuoka = maara;
     }
     
-
     public List getLaumat() {
         return laumat;
     }
@@ -52,6 +52,16 @@ public class Ruutu {
     public List getElaimet() {
         return elaimet;
     }
+    
+    public boolean getKasvaakoRuoka() {
+        return this.kasvattaakoRuokaa;
+    }
+    
+    public void setKasvaakoRuoka(boolean b) {
+        this.kasvattaakoRuokaa = b;
+    }
+    
+    
     
     public void lisaaLauma(Lauma lauma) {
         this.laumat.add(lauma);
@@ -107,6 +117,37 @@ public class Ruutu {
     
     @Override
     public String toString() {
-        return "";
+        return this.xKoord+" "+this.yKoord;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + this.xKoord * this.xKoord;
+        hash = 34 * hash + this.yKoord;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Ruutu other = (Ruutu) obj;
+        if (this.xKoord != other.xKoord) {
+            return false;
+        }
+        if (this.yKoord != other.yKoord) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }
