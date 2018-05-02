@@ -9,6 +9,8 @@ public class Kartta {
         this.ruudut = new Ruutu[leveys][pituus];
     }
     
+    // Ruudut alustetaan ruoka-arvolle 0 testausta varten. Oikea arvojen alustaminen puuttuu.
+    // implementaatio: kartalle luodaan nodeja, joiden ympäröiville ruuduille spawnataan ruokaa
     public void alusta() {
         for (int i = 0; i < ruudut.length; i++) {
             for (int j = 0; j < ruudut[i].length; j++) {
@@ -25,6 +27,7 @@ public class Kartta {
         this.ruudut = ruudut;
     }
     
+    // Testausta varten. Valmiissa ohjelmassa käytetään graafista käyttöliittymää.
     public void piirraKartta() {
         String piirrettava = "";
         for (int i = 0; i < this.ruudut.length; i++) {

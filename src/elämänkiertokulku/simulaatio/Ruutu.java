@@ -43,7 +43,6 @@ public class Ruutu {
         this.liharuoka = maara;
     }
     
-
     public List getLaumat() {
         return laumat;
     }
@@ -51,6 +50,8 @@ public class Ruutu {
     public List getElaimet() {
         return elaimet;
     }
+    
+    
     
     public void lisaaLauma(Lauma lauma) {
         this.laumat.add(lauma);
@@ -113,7 +114,7 @@ public class Ruutu {
     public int hashCode() {
         int hash = 7;
         hash = 37 * hash + this.xKoord * this.xKoord;
-        hash = 37 * hash + this.yKoord;
+        hash = 34 * hash + this.yKoord;
         return hash;
     }
 

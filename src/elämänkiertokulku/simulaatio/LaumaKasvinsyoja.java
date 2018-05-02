@@ -17,10 +17,10 @@ public class LaumaKasvinsyoja extends Lauma {
         maaritaLaumanTavoite();
         switch (this.getTavoite()) {
             case PAKENE:
-                // implement
+                // IMPLEMENT
                 break;
             case ODOTA:
-                // implement
+                // IMPLEMENT
                 break;
             case UUSI_RUOKAPAIKKA:
                 this.setTavoiteRuutu(seuraavanRuokapaikanSijainti());
@@ -51,8 +51,9 @@ public class LaumaKasvinsyoja extends Lauma {
                 } else {
                     this.setLiikkeenVaihe(this.getLiikkeenVaihe()+1);
                 }
+                
                 if (this.getRuutu().equals(this.getTavoiteRuutu())) {
-                    
+                    this.setTavoiteRuutu(null);
                 }
         }
         tyhjennaPoistettavat();
@@ -61,7 +62,8 @@ public class LaumaKasvinsyoja extends Lauma {
     @Override
     public void maaritaLaumanTavoite() {
         if (1 == 0) {
-            this.setTavoite(LaumanTavoite.PAKENE); //alueella lihansyöjiä -> täytyy implementoida
+            this.setTavoite(LaumanTavoite.PAKENE);
+            // IMPLEMENT
         } else if (this.getTavoiteRuutu() != null) {
             this.setTavoite(LaumanTavoite.LIIKU_RUOKA);
         } else if (ruoanMaaraAlueella(this.getRuutu().getxKoord(), this.getRuutu().getyKoord()) > this.getRuoanRajaarvo()) {
@@ -71,6 +73,7 @@ public class LaumaKasvinsyoja extends Lauma {
         }
     }
     
+    // Metodia käytetään, kun lauman alueelta loppuu ruoka, ja lauma halutaan siirtää uuteen ruutuun.
     @Override
     public Ruutu seuraavanRuokapaikanSijainti() {
         double parasArvo = 0;

@@ -11,12 +11,12 @@ public class Lauma {
     private final int NOPEUS = 10;
     private final Ruutu[][] RUUDUKKO;
     private int id;
+    private List<Elain> jasenet = new ArrayList();
     private List<Elain> poistettavat = new ArrayList();
     private Ruutu ruutu;
     private Ruutu tavoiteRuutu;
-    private List<Elain> jasenet = new ArrayList();
     private LaumanTavoite tavoite;
-    private int liikkeenVaihe;
+    private int liikkeenVaihe; // liikkeen vaihetta kasvatetaan yhdellä, kunnes sen arvo on >= lauman nopeus, jolloin lauma saa liikkua
     
     public Lauma(int id, Ruutu ruutu, Ruutu[][] ruudukko) {
         this.id = id;
@@ -91,17 +91,17 @@ public class Lauma {
     
     
     
-    // Käytetään vain nimeämään metodi aliluokissa
+    // Nimeämistä varten. Käyttö aliluokissa
     public void maaritaLaumanTavoite() {
         
     }
     
-    // Käytetään vain nimeämään metodi aliluokissa
+    // Nimeämistä varten. Käyttö aliluokissa
     public int ruoanMaaraAlueella(int x, int y) {
         return 0;
     }
     
-    // Käytetään vain nimeämään metodi aliluokissa
+    // Nimeämistä varten. Käyttö aliluokissa
     public Ruutu seuraavanRuokapaikanSijainti() {
         return this.ruutu;
     }
@@ -113,9 +113,6 @@ public class Lauma {
     public void lisaaJasen(Elain elain) {
         elain.getRuutu().lisaaElain(elain);
         this.jasenet.add(elain);
-    }
-    public void elaimenKoordinaatti(Elain elain) {
-        elain.setRuutu(ruutu);
     }
     
     // yMuutos vaikuttaa xMuutokseen, koska vino liikkuminen on mahdollista
