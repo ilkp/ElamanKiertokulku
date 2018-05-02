@@ -12,7 +12,7 @@ public class Kartta {
     public void alusta() {
         for (int i = 0; i < ruudut.length; i++) {
             for (int j = 0; j < ruudut[i].length; j++) {
-                ruudut[i][j] = new Ruutu(i, j);
+                ruudut[i][j] = new Ruutu(i, j, 0);
             }
         }
     }

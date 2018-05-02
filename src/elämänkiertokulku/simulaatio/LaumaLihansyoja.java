@@ -13,14 +13,14 @@ public class LaumaLihansyoja extends Lauma {
     
 
     public Ruutu onkoRuokaa() {
-        for (int i = -this.ALUEEN_KOKO; i < this.ALUEEN_KOKO + 1; i++) {
-            for (int j = -this.ALUEEN_KOKO; j < this.ALUEEN_KOKO + 1; j++) {
-                int xKoord = this.ruutu.getxKoord() + i;
-                int yKoord = this.ruutu.getyKoord() + j;
-                List<Elain> elaimet = this.ruudukko[xKoord][yKoord].getElaimet();
+        for (int i = -this.getAlueenKoko(); i < this.getAlueenKoko() + 1; i++) {
+            for (int j = -this.getAlueenKoko(); j < this.getAlueenKoko() + 1; j++) {
+                int xKoord = this.getRuutu().getxKoord() + i;
+                int yKoord = this.getRuutu().getyKoord() + j;
+                List<Elain> elaimet = this.getRuudukko()[xKoord][yKoord].getElaimet();
                 for (Elain elain : elaimet) {
                     if(elain.getClass().equals(Kasvinsyoja.class)){
-                        return ruudukko[xKoord][yKoord];
+                        return this.getRuudukko()[xKoord][yKoord];
                     }
                 }
              

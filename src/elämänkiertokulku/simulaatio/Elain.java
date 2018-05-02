@@ -64,9 +64,19 @@ public class Elain {
     
     
     //Alla omat metodit
+    
+    public void maaritaTavoite(){}
+    
     public void ajaElain() {
+        
         if (!kuoleekoElain()) {
+            maaritaTavoite();
             
+            if (this.tavoite == ElaimenTavoite.PAKENE) {
+                // implement
+            } else if (this.tavoite == ElaimenTavoite.LIIKU_LAHIN_RUOKA) {
+                
+            }
             
         } else {
             tapaElain();
@@ -115,6 +125,7 @@ public class Elain {
         }
         return false;
     }
+    
     
     @Override
     public String toString() {

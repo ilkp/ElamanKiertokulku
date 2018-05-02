@@ -13,11 +13,10 @@ public class Ruutu {
     private List laumat = new ArrayList();
     private List elaimet = new ArrayList();
 
-    public Ruutu(int xKoord, int yKoord) {
+    public Ruutu(int xKoord, int yKoord, int ruoka) {
         this.xKoord = xKoord;
         this.yKoord = yKoord;
-        //Ruoan testaamiseksi toistaiseksi 100
-        this.kasviruoka = 100;
+        this.kasviruoka = ruoka;
     }
 
     public int getxKoord() {
@@ -107,6 +106,37 @@ public class Ruutu {
     
     @Override
     public String toString() {
-        return "";
+        return this.xKoord+" "+this.yKoord;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + this.xKoord * this.xKoord;
+        hash = 37 * hash + this.yKoord;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Ruutu other = (Ruutu) obj;
+        if (this.xKoord != other.xKoord) {
+            return false;
+        }
+        if (this.yKoord != other.yKoord) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }

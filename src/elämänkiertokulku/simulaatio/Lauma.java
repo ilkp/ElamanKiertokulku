@@ -6,21 +6,23 @@ import java.util.List;
 
 
 public class Lauma {
+    private final int ALUEEN_KOKO = 4;
+    private final int RUOAN_RAJAARVO = 20;
+    private final int NOPEUS = 10;
+    private final Ruutu[][] RUUDUKKO;
     private int id;
     private List<Elain> poistettavat = new ArrayList();
-    protected Ruutu ruutu;
-    protected Ruutu tavoiteRuutu;
-    protected final Ruutu[][] ruudukko;
-    protected List<Elain> jasenet = new ArrayList();
-    protected LaumanTavoite tavoite;
-    
-    protected final int ALUEEN_KOKO = 4;
-    protected final int RUOAN_RAJAARVO = 20;
+    private Ruutu ruutu;
+    private Ruutu tavoiteRuutu;
+    private List<Elain> jasenet = new ArrayList();
+    private LaumanTavoite tavoite;
+    private int liikkeenVaihe;
     
     public Lauma(int id, Ruutu ruutu, Ruutu[][] ruudukko) {
         this.id = id;
         this.ruutu = ruutu;
-        this.ruudukko = ruudukko;
+        this.RUUDUKKO = ruudukko;
+        this.liikkeenVaihe = 0;
     }
 
     public int getId() {
@@ -48,11 +50,64 @@ public class Lauma {
     }
 
     public Ruutu[][] getRuudukko() {
-        return ruudukko;
+        return RUUDUKKO;
+    }
+    
+    public void setTavoite(LaumanTavoite tavoite) {
+        this.tavoite = tavoite;
+    }
+    
+    public LaumanTavoite getTavoite() {
+        return this.tavoite;
+    }
+    
+    public void setTavoiteRuutu(Ruutu ruutu) {
+        this.tavoiteRuutu = ruutu;
+    }
+    
+    public Ruutu getTavoiteRuutu() {
+        return this.tavoiteRuutu;
+    }
+    
+    public void setLiikkeenVaihe(int vaihe) {
+        this.liikkeenVaihe = vaihe;
+    }
+    
+    public int getLiikkeenVaihe() {
+        return this.liikkeenVaihe;
+    }
+    
+    public int getNopeus() {
+        return this.NOPEUS;
+    }
+    
+    public int getAlueenKoko() {
+        return this.ALUEEN_KOKO;
+    }
+    
+    public int getRuoanRajaarvo() {
+        return this.RUOAN_RAJAARVO;
     }
     
     
+    
+    // Käytetään vain nimeämään metodi aliluokissa
+    public void maaritaLaumanTavoite() {
+        
+    }
+    
+    // Käytetään vain nimeämään metodi aliluokissa
+    public int ruoanMaaraAlueella(int x, int y) {
+        return 0;
+    }
+    
+    // Käytetään vain nimeämään metodi aliluokissa
+    public Ruutu seuraavanRuokapaikanSijainti() {
+        return this.ruutu;
+    }
+    
     public void ajaLauma() {
+        System.out.println("testi");
     }
     
     public void lisaaJasen(Elain elain) {
@@ -63,22 +118,11 @@ public class Lauma {
         elain.setRuutu(ruutu);
     }
     
-    // yMuutos vaikuttaa xMuutokseen, koska vinoon liikkuminen on mahdollista
+    // yMuutos vaikuttaa xMuutokseen, koska vino liikkuminen on mahdollista
     public int etaisyysRuudusta(Ruutu ruutu) {
         int yMuutos = ruutu.getyKoord() - this.ruutu.getyKoord();
         int xMuutos = ruutu.getxKoord() - this.ruutu.getxKoord() - yMuutos;
         return yMuutos + xMuutos;
-    }
-    
-    public void maaritaLaumanTavoite() {
-    }
-    
-    public int ruoanMaaraAlueella(int x, int y) {
-        return 0;
-    }
-    
-    public Ruutu seuraavanRuokapaikanSijainti() {
-        return null;
     }
     
     public void siirraPoistettaviin(Elain jasen) {

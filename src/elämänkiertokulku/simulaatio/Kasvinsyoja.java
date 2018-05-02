@@ -15,6 +15,7 @@ public class Kasvinsyoja extends Elain {
         return false;
     }
     
+    @Override
     public void maaritaTavoite() {
         if (1 == 0) {
             this.tavoite = ElaimenTavoite.PAKENE;
