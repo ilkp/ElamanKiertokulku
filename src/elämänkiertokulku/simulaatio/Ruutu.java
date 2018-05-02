@@ -8,15 +8,17 @@ import java.util.List;
 public class Ruutu {
     private final int xKoord;
     private final int yKoord;
+    private boolean kasvattaakoRuokaa;
     private int kasviruoka;
     private int liharuoka;
     private List laumat = new ArrayList();
     private List elaimet = new ArrayList();
 
-    public Ruutu(int xKoord, int yKoord, int ruoka) {
+    public Ruutu(int xKoord, int yKoord, int ruoka, boolean kasvaakoRuoka) {
         this.xKoord = xKoord;
         this.yKoord = yKoord;
         this.kasviruoka = ruoka;
+        this.kasvattaakoRuokaa = kasvaakoRuoka;
     }
 
     public int getxKoord() {
@@ -49,6 +51,14 @@ public class Ruutu {
 
     public List getElaimet() {
         return elaimet;
+    }
+    
+    public boolean getKasvaakoRuoka() {
+        return this.kasvattaakoRuokaa;
+    }
+    
+    public void setKasvaakoRuoka(boolean b) {
+        this.kasvattaakoRuokaa = b;
     }
     
     
