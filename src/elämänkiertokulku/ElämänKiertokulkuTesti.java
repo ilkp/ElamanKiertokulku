@@ -16,7 +16,6 @@ public class ElämänKiertokulkuTesti {
         Kontrolleri kontrolleri = new Kontrolleri(10, 10);
         
         kontrolleri.getKartta().alusta();
-        kontrolleri.getKartta().getRuudut()[9][9].setKasviruoka(100);
         LaumaKasvinsyoja testiLauma = new LaumaKasvinsyoja(kontrolleri.seuraavaId(), kontrolleri.getKartta().getRuudut()[4][4], kontrolleri.getKartta().getRuudut());
         
         kontrolleri.lisaaLauma(testiLauma);
