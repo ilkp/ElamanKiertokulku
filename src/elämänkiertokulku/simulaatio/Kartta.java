@@ -86,22 +86,29 @@ public class Kartta {
         String piirrettava = "";
         for (int i = 0; i < this.ruudut.length; i++) {
             for (int j = 0; j < this.ruudut[i].length; j++) {
-                if (this.ruudut[i][j].getKasviruoka() < 10) {
-                    piirrettava += "[  "+this.ruudut[i][j].getKasviruoka()+"]";
+                if (this.ruudut[i][j].getKasviruoka() < 1) {
+                    piirrettava += "|    ";
+                }else if (this.ruudut[i][j].getKasviruoka() < 10) {
+                    piirrettava += "|   "+this.ruudut[i][j].getKasviruoka();
                 } else if (this.ruudut[i][j].getKasviruoka() < 100) {
-                    piirrettava += "[ "+this.ruudut[i][j].getKasviruoka()+"]";
+                    piirrettava += "|  "+this.ruudut[i][j].getKasviruoka();
                 } else {
-                    piirrettava += "["+this.ruudut[i][j].getKasviruoka()+"]";
+                    piirrettava += "| "+this.ruudut[i][j].getKasviruoka();
                 }
             }
-            piirrettava += "\n";
+            piirrettava += "|\n";
             
             for (int k = 0; k < this.ruudut[i].length; k++) {
                 if (this.ruudut[i][k].getLaumat().size() > 0) {
-                    piirrettava += "[X "+this.ruudut[i][k].getElaimet().size()+"]";
+                    piirrettava += "|X  "+this.ruudut[i][k].getElaimet().size();
                 } else {
-                    piirrettava += "[  "+this.ruudut[i][k].getElaimet().size()+"]";
+                    piirrettava += "|    ";
                 }
+            }
+            piirrettava += "|\n";
+            
+            for (int k = 0; k < this.ruudut[i].length; k++) {
+                piirrettava += "-----";
             }
             piirrettava += "\n";
         }

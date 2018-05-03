@@ -1,16 +1,15 @@
 
 package elämänkiertokulku.simulaatio;
 
+import elämänkiertokulku.kontrolleri.Kontrolleri;
 import java.util.List;
 
 
 public class LaumaLihansyoja extends Lauma {
-    
 
-    public LaumaLihansyoja(int id, Ruutu ruutu, Ruutu[][] ruudukko) {
-        super(id, ruutu, ruudukko);
+    public LaumaLihansyoja(Kontrolleri kontrolleri, int id, Ruutu ruutu, Ruutu[][] ruudukko) {
+        super(kontrolleri, id, ruutu, ruudukko);
     }
-    
 
     public Ruutu onkoRuokaa() {
         for (int i = -this.getAlueenKoko(); i < this.getAlueenKoko() + 1; i++) {

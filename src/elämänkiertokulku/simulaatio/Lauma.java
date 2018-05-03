@@ -1,11 +1,13 @@
 
 package elämänkiertokulku.simulaatio;
 
+import elämänkiertokulku.kontrolleri.Kontrolleri;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class Lauma {
+    private final Kontrolleri kontrolleri;
     private final int ALUEEN_KOKO = 4;
     private final int RUOAN_RAJAARVO = 20;
     private final int NOPEUS = 10;
@@ -18,11 +20,16 @@ public class Lauma {
     private LaumanTavoite tavoite;
     private int liikkeenVaihe; // liikkeen vaihetta kasvatetaan yhdellä, kunnes sen arvo on >= lauman nopeus, jolloin lauma saa liikkua
     
-    public Lauma(int id, Ruutu ruutu, Ruutu[][] ruudukko) {
+    public Lauma(Kontrolleri kontrolleri, int id, Ruutu ruutu, Ruutu[][] ruudukko) {
+        this.kontrolleri = kontrolleri;
         this.id = id;
         this.ruutu = ruutu;
         this.RUUDUKKO = ruudukko;
         this.liikkeenVaihe = 0;
+    }
+    
+    public Kontrolleri getKontrolleri() {
+        return this.kontrolleri;
     }
 
     public int getId() {
@@ -107,7 +114,7 @@ public class Lauma {
     }
     
     public void ajaLauma() {
-        System.out.println("testi");
+        
     }
     
     public void lisaaJasen(Elain elain) {
@@ -120,6 +127,37 @@ public class Lauma {
         int yMuutos = ruutu.getyKoord() - this.ruutu.getyKoord();
         int xMuutos = ruutu.getxKoord() - this.ruutu.getxKoord() - yMuutos;
         return yMuutos + xMuutos;
+    }
+    
+    public void liiku() {
+        if (this.liikkeenVaihe >= this.NOPEUS) {
+            int liikkeenXSuunta = this.getTavoiteRuutu().getxKoord() - this.getRuutu().getxKoord();
+            if (liikkeenXSuunta != 0) {
+                liikkeenXSuunta /= Math.abs(liikkeenXSuunta);
+            }
+
+            int liikkeenYSuunta = this.getTavoiteRuutu().getyKoord() - this.getRuutu().getyKoord();
+            if (liikkeenYSuunta != 0) {
+                liikkeenYSuunta /= Math.abs(liikkeenYSuunta);
+            }
+
+            int uusiX = this.getRuutu().getxKoord() + liikkeenXSuunta;
+            int uusiY = this.getRuutu().getyKoord() + liikkeenYSuunta;
+
+            Ruutu seuraavaRuutu = this.getRuudukko()[uusiX][uusiY];
+            this.setRuutu(seuraavaRuutu);
+
+            if (this.getRuutu() == this.getTavoiteRuutu()) {
+                this.setTavoiteRuutu(null);
+            }
+            this.liikkeenVaihe = 0;
+        } else {
+            this.liikkeenVaihe++;
+        }
+
+        if (this.getRuutu().equals(this.getTavoiteRuutu())) {
+            this.setTavoiteRuutu(null);
+        }
     }
     
     public void siirraPoistettaviin(Elain jasen) {

@@ -10,12 +10,15 @@ public class Elain {
     private Ruutu tavoiteRuutu;
     private int ruokatilanne;
     private ElaimenTavoite tavoite;
+    private int liikkeenVaihe;
+    private int nopeus = 10;
     
     public Elain(int id, Ruutu ruutu, Lauma lauma) {
         this.id = id;
         this.ruutu = ruutu;
         this.omaLauma = lauma;
         this.kuolintodennakoisyys = 0.01;
+        this.liikkeenVaihe = 0;
     }
     
     //Alla getterit ja setterit
@@ -72,6 +75,10 @@ public class Elain {
         return this.omaLauma;
     }
     
+    public int getLiikkeenVaihe() {
+        return this.liikkeenVaihe;
+    }
+    
     
     
     
@@ -80,26 +87,14 @@ public class Elain {
     // Metodin nimeämistä varten, käyttö aliluokassa
     public void maaritaTavoite(){}
     
-    // Metodia kutsuu eläimen oma lauma. ajaElain testaa kuoleeko eläin ja tekee tarvittavat toimenpiteet.
+    // Metodin nimeämistä varten, käyttö aliluokassa
     public void ajaElain() {
         
-        if (!kuoleekoElain()) {
-            maaritaTavoite();
-            
-            if (this.tavoite == ElaimenTavoite.PAKENE) {
-                // implement
-            } else if (this.tavoite == ElaimenTavoite.LIIKU_LAHIN_RUOKA) {
-                
-            }
-            
-        } else {
-            tapaElain();
-        }
     }
     
     public boolean kuoleekoElain() {
         double rnd = Math.random();
-        if (rnd < this.kuolintodennakoisyys) {
+        if (rnd < this.kuolintodennakoisyys * (1 + (100 - this.ruokatilanne) / 100)) {
             return true;
         }
         this.kuolintodennakoisyys += 0.005;
@@ -125,6 +120,45 @@ public class Elain {
             this.ruokatilanne += muutos;
         } else {
             this.ruokatilanne = 0;
+        }
+    }
+    
+    public void liiku() {
+        if (this.liikkeenVaihe >= this.nopeus) {
+            int liikkeenXSuunta = this.getTavoiteRuutu().getxKoord() - this.getRuutu().getxKoord();
+            if (liikkeenXSuunta != 0) {
+                liikkeenXSuunta /= Math.abs(liikkeenXSuunta);
+            }
+
+            int liikkeenYSuunta = this.getTavoiteRuutu().getyKoord() - this.getRuutu().getyKoord();
+            if (liikkeenYSuunta != 0) {
+                liikkeenYSuunta /= Math.abs(liikkeenYSuunta);
+            }
+
+            int uusiX = this.getRuutu().getxKoord() + liikkeenXSuunta;
+            int uusiY = this.getRuutu().getyKoord() + liikkeenYSuunta;
+
+            Ruutu seuraavaRuutu = this.getLauma().getRuudukko()[uusiX][uusiY];
+            this.setRuutu(seuraavaRuutu);
+
+            if (this.getRuutu() == this.getTavoiteRuutu()) {
+                this.setTavoiteRuutu(null);
+            }
+            this.liikkeenVaihe = 0;
+        } else {
+            this.liikkeenVaihe++;
+        }
+
+        if (this.getRuutu().equals(this.getTavoiteRuutu())) {
+            this.setTavoiteRuutu(null);
+        }
+    }
+    
+    public void lisaanny(Elain elain) {
+        if (elain.getLauma() == this.getLauma() && elain.getRuutu() == this.getRuutu() && elain.getTavoite() == ElaimenTavoite.LISAANNY) {
+            this.getLauma().lisaaJasen(new Kasvinsyoja(this.getLauma().getKontrolleri().seuraavaId(), this.getRuutu(), this.getLauma()));
+            this.ruokatilanne -= 50;
+            elain.setRuokatilanne(elain.getRuokatilanne() - 50);
         }
     }
     

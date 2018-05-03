@@ -1,17 +1,21 @@
 
 package elämänkiertokulku.simulaatio;
 
+import elämänkiertokulku.kontrolleri.Kontrolleri;
+
 
 public class LaumaKasvinsyoja extends Lauma {
-    
-    public LaumaKasvinsyoja(int id, Ruutu ruutu, Ruutu[][] ruudukko) {
-        super(id, ruutu, ruudukko);
+
+    public LaumaKasvinsyoja(Kontrolleri kontrolleri, int id, Ruutu ruutu, Ruutu[][] ruudukko) {
+        super(kontrolleri, id, ruutu, ruudukko);
     }
+    
+    
     
     @Override
     public void ajaLauma() {
-        this.getJasenet().forEach((elain) -> {
-            elain.ajaElain();
+        this.getJasenet().forEach((jasen) -> {
+            jasen.ajaElain();
         });
         
         maaritaLaumanTavoite();
@@ -24,37 +28,11 @@ public class LaumaKasvinsyoja extends Lauma {
                 break;
             case UUSI_RUOKAPAIKKA:
                 this.setTavoiteRuutu(seuraavanRuokapaikanSijainti());
-                // ei breakkiä -> uuden ruudun laskemisen jälkeen liikutaan myös
+                this.liiku();
+                break;
             case LIIKU_RUOKA:
-                if (this.getLiikkeenVaihe() >= this.getNopeus()) {
-                    int liikkeenXSuunta = this.getTavoiteRuutu().getxKoord() - this.getRuutu().getxKoord();
-                    if (liikkeenXSuunta != 0) {
-                        liikkeenXSuunta /= Math.abs(liikkeenXSuunta);
-                    }
-
-                    int liikkeenYSuunta = this.getTavoiteRuutu().getyKoord() - this.getRuutu().getyKoord();
-                    if (liikkeenYSuunta != 0) {
-                        liikkeenYSuunta /= Math.abs(liikkeenYSuunta);
-                    }
-
-                    int uusiX = this.getRuutu().getxKoord() + liikkeenXSuunta;
-                    int uusiY = this.getRuutu().getyKoord() + liikkeenYSuunta;
-
-                    Ruutu seuraavaRuutu = this.getRuudukko()[uusiX][uusiY];
-                    this.setRuutu(seuraavaRuutu);
-
-                    if (this.getRuutu() == this.getTavoiteRuutu()) {
-                        this.setTavoiteRuutu(null);
-                    }
-                    this.setLiikkeenVaihe(0);
-                    break;
-                } else {
-                    this.setLiikkeenVaihe(this.getLiikkeenVaihe()+1);
-                }
-                
-                if (this.getRuutu().equals(this.getTavoiteRuutu())) {
-                    this.setTavoiteRuutu(null);
-                }
+                this.liiku();
+                break;
         }
         tyhjennaPoistettavat();
     }
