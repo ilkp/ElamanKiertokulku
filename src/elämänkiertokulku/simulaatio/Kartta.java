@@ -100,9 +100,14 @@ public class Kartta {
             
             for (int k = 0; k < this.ruudut[i].length; k++) {
                 if (this.ruudut[i][k].getLaumat().size() > 0) {
-                    piirrettava += "|X  "+this.ruudut[i][k].getElaimet().size();
+                    piirrettava += "|X  ";
                 } else {
-                    piirrettava += "|    ";
+                    piirrettava += "|   ";
+                }
+                if (this.ruudut[i][k].getElaimet().size() > 0) {
+                    piirrettava += this.ruudut[i][k].getElaimet().size();
+                } else {
+                    piirrettava += " ";
                 }
             }
             piirrettava += "|\n";

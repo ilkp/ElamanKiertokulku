@@ -6,11 +6,9 @@ import elämänkiertokulku.kontrolleri.Kontrolleri;
 
 public class LaumaKasvinsyoja extends Lauma {
 
-    public LaumaKasvinsyoja(Kontrolleri kontrolleri, int id, Ruutu ruutu, Ruutu[][] ruudukko) {
-        super(kontrolleri, id, ruutu, ruudukko);
+    public LaumaKasvinsyoja(Kontrolleri kontrolleri, int id, int NOPEUS, Ruutu omaRuutu) {
+        super(kontrolleri, id, NOPEUS, omaRuutu);
     }
-    
-    
     
     @Override
     public void ajaLauma() {
@@ -44,7 +42,7 @@ public class LaumaKasvinsyoja extends Lauma {
             // IMPLEMENT
         } else if (this.getTavoiteRuutu() != null) {
             this.setTavoite(LaumanTavoite.LIIKU_RUOKA);
-        } else if (ruoanMaaraAlueella(this.getRuutu().getxKoord(), this.getRuutu().getyKoord()) > this.getRuoanRajaarvo()) {
+        } else if (ruoanMaaraAlueella(this.getOmaRuutu().getxKoord(), this.getOmaRuutu().getyKoord()) > this.getRuoanRajaarvo()) {
             this.setTavoite(LaumanTavoite.ODOTA);
         } else {
             this.setTavoite(LaumanTavoite.UUSI_RUOKAPAIKKA);
@@ -57,15 +55,16 @@ public class LaumaKasvinsyoja extends Lauma {
         double parasArvo = 0;
         int ruoanMaara = 0;
         double ruudunArvo = 0;
-        Ruutu palautettava = this.getRuudukko()[0][0];
+        Ruutu[][] ruudut = this.getKontrolleri().getKartta().getRuudut();
+        Ruutu palautettava = ruudut[0][0];
         
-        for (int i = this.getAlueenKoko(); i < this.getRuudukko().length - this.getAlueenKoko(); i++) {
-            for (int j = this.getAlueenKoko(); j < this.getRuudukko()[i].length - this.getAlueenKoko(); j++) {
-                if (i != this.getRuutu().getxKoord() && j != this.getRuutu().getyKoord()) {
+        for (int i = this.getAlueenKoko(); i < ruudut.length - this.getAlueenKoko(); i++) {
+            for (int j = this.getAlueenKoko(); j < ruudut.length - this.getAlueenKoko(); j++) {
+                if (i != this.getOmaRuutu().getxKoord() && j != this.getOmaRuutu().getyKoord()) {
                     ruoanMaara = ruoanMaaraAlueella(i , j);
-                    ruudunArvo = ruoanMaara / this.etaisyysRuudusta(this.getRuudukko()[i][j]);
+                    ruudunArvo = ruoanMaara / this.etaisyysRuudusta(ruudut[i][j]);
                     if (ruudunArvo > parasArvo) {
-                        palautettava = this.getRuudukko()[i][j];
+                        palautettava = ruudut[i][j];
                         parasArvo = ruudunArvo;
                     }
                 }
@@ -81,7 +80,7 @@ public class LaumaKasvinsyoja extends Lauma {
             for (int j = -this.getAlueenKoko(); j < this.getAlueenKoko() + 1; j++) {
                 int xKoord = x + i;
                 int yKoord = y + j;
-                maara += this.getRuudukko()[xKoord][yKoord].getKasviruoka();
+                maara += this.getKontrolleri().getKartta().getRuudut()[xKoord][yKoord].getKasviruoka();
             }
         }
         return maara;

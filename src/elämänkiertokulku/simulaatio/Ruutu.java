@@ -11,8 +11,8 @@ public class Ruutu {
     private boolean kasvattaakoRuokaa;
     private int kasviruoka;
     private int liharuoka;
-    private List laumat = new ArrayList();
-    private List elaimet = new ArrayList();
+    private List<Liikuteltava> laumat = new ArrayList();
+    private List<Liikuteltava> elaimet = new ArrayList();
 
     public Ruutu(int xKoord, int yKoord, int ruoka, boolean kasvaakoRuoka) {
         this.xKoord = xKoord;
@@ -63,7 +63,7 @@ public class Ruutu {
     
     
     
-    public void lisaaLauma(Lauma lauma) {
+    public void lisaaLauma(Liikuteltava lauma) {
         this.laumat.add(lauma);
     }
     
@@ -75,7 +75,7 @@ public class Ruutu {
         return false;
     }
     
-    public void lisaaElain(Elain elain) {
+    public void lisaaElain(Liikuteltava elain) {
         this.elaimet.add(elain);
     }
     
@@ -113,6 +113,11 @@ public class Ruutu {
         } else {
             this.liharuoka = 0;
         }
+    }
+    
+    public void poistaIdMukaan(int id) {
+        this.laumat.remove(id);
+        this.elaimet.remove(id);
     }
     
     @Override

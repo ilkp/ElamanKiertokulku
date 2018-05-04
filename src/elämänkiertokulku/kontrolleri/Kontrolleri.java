@@ -12,6 +12,7 @@ public class Kontrolleri {
     private Kartta kartta;
     private int idLaskuri = 1;
     private List<Lauma> laumat = new ArrayList();
+    private int tikki = 0;
     
     public Kontrolleri(int kartanLeveys, int kartanKorkeus) {
         this.kartta = new Kartta(kartanLeveys, kartanKorkeus);
@@ -30,7 +31,7 @@ public class Kontrolleri {
     }
 
     public void lisaaLauma(Lauma lauma) {
-        lauma.getRuutu().lisaaLauma(lauma);
+        lauma.getOmaRuutu().lisaaLauma(lauma);
         this.laumat.add(lauma);
     }
 
@@ -40,6 +41,18 @@ public class Kontrolleri {
 
     public void setIdLaskuri(int idLaskuri) {
         this.idLaskuri = idLaskuri;
+    }
+    
+    public void tikkaa() {
+        this.tikki++;
+    }
+    
+    public int getTick() {
+        return this.tikki;
+    }
+    
+    public Random getRandom() {
+        return this.random;
     }
     
     public void ajaLaumat() {

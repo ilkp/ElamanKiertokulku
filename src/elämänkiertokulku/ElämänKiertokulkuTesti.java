@@ -17,8 +17,8 @@ public class ElämänKiertokulkuTesti {
         Kontrolleri kontrolleri = new Kontrolleri(10, 10);
         
         kontrolleri.getKartta().alusta();
-        LaumaKasvinsyoja testilauma = new LaumaKasvinsyoja(kontrolleri, kontrolleri.seuraavaId(), kontrolleri.getKartta().getRuudut()[4][4], kontrolleri.getKartta().getRuudut());
-        testilauma.lisaaJasen(new Kasvinsyoja(kontrolleri.seuraavaId(), testilauma.getRuutu(), testilauma));
+        LaumaKasvinsyoja testilauma = new LaumaKasvinsyoja(kontrolleri, kontrolleri.seuraavaId(), 10, kontrolleri.getKartta().getRuudut()[4][4]);
+        testilauma.lisaaJasen(new Kasvinsyoja(kontrolleri, kontrolleri.seuraavaId(), 10, testilauma.getOmaRuutu(), testilauma));
         testilauma.getJasenet().get(0).setRuokatilanne(40);
         
         kontrolleri.lisaaLauma(testilauma);

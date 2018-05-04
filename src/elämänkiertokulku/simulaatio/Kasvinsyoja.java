@@ -1,13 +1,14 @@
 
 package elämänkiertokulku.simulaatio;
 
+import elämänkiertokulku.kontrolleri.Kontrolleri;
 import java.util.List;
 
 
 public class Kasvinsyoja extends Elain {
     
-    public Kasvinsyoja(int id, Ruutu ruutu, Lauma lauma) {
-        super(id, ruutu, lauma);
+    public Kasvinsyoja(Kontrolleri kontrolleri, int id, int nopeus, Ruutu omaRuutu, Lauma lauma) {
+        super(kontrolleri, id, nopeus, omaRuutu, lauma);
     }
     
     @Override
@@ -19,7 +20,7 @@ public class Kasvinsyoja extends Elain {
                     // IMPLEMENT
                     break;
                 case LISAANNY:
-                    List<Elain> ruudunElaimet = this.getRuutu().getElaimet();
+                    List<Elain> ruudunElaimet = this.getOmaRuutu().getElaimet();
                     boolean ruudussaLisaantyja = false;
                     for (Elain elain : ruudunElaimet) {
                         if (elain.getId() != this.getId() && elain.getLauma() == this.getLauma() && elain.getTavoite() == ElaimenTavoite.LISAANNY) {
@@ -36,6 +37,7 @@ public class Kasvinsyoja extends Elain {
                     this.syo();
                     break;
                 case LIIKU_LAHIN_RUOKA:
+                    System.out.println("testi liiku lahin ruoka");
                     loydaLahinRuoka();
                     this.liiku();
                     break;
@@ -44,7 +46,7 @@ public class Kasvinsyoja extends Elain {
                     this.liiku();
                     break;
                 case LIIKU_LAUMA:
-                    this.setTavoiteRuutu(this.getLauma().getRuutu());
+                    this.setTavoiteRuutu(this.getLauma().getOmaRuutu());
                     this.liiku();
                     break;
             }
@@ -54,18 +56,18 @@ public class Kasvinsyoja extends Elain {
     }
     
     public void syo() {
-        int ruudunRuoka = this.getRuutu().getKasviruoka();
+        int ruudunRuoka = this.getOmaRuutu().getKasviruoka();
         if (ruudunRuoka < 5) {
             this.lisaaRuoka(ruudunRuoka);
-            this.getRuutu().vahennaKasviRuoka(ruudunRuoka);
+            this.getOmaRuutu().vahennaKasviRuoka(ruudunRuoka);
         } else {
             this.lisaaRuoka(5);
-            this.getRuutu().vahennaKasviRuoka(5);
+            this.getOmaRuutu().vahennaKasviRuoka(5);
         }
     }
     
     public boolean onkoOmassaRuudussaKasviruokaa() {
-        if (this.getRuutu().getKasviruoka() != 0) {
+        if (this.getOmaRuutu().getKasviruoka() != 0) {
             return true;
         }
         return false;
@@ -99,28 +101,28 @@ public class Kasvinsyoja extends Elain {
     // Eläimen tavoiteruuduksi asetetaan ensimmäinen löydetty ruutu, jossa on ruokaa tai oman lauman ruutu, jos ruokaa ei löydy.
     public void loydaLahinRuoka() {
         int alueenKoko = this.getLauma().getAlueenKoko();
-        Ruutu[][] ruudut = this.getLauma().getRuudukko();
+        Ruutu[][] ruudut = this.getLauma().getKontrolleri().getKartta().getRuudut();
         for (int i = -alueenKoko; i < alueenKoko; i++) {
             for (int j = -alueenKoko; j < alueenKoko; j++) {
-                int xKoord = this.getRuutu().getxKoord() + i;
-                int yKoord = this.getRuutu().getyKoord() + j;
+                int xKoord = this.getOmaRuutu().getxKoord() + i;
+                int yKoord = this.getOmaRuutu().getyKoord() + j;
                 if (ruudut[xKoord][yKoord].getKasviruoka() != 0) {
                     this.setTavoiteRuutu(ruudut[xKoord][yKoord]);
                     return;
                 }
             }
         }
-        this.setTavoiteRuutu(this.getLauma().getRuutu());
+        this.setTavoiteRuutu(this.getLauma().getOmaRuutu());
     }
     
     public void loydaLisaantyja() {
         for (Elain jasen : this.getLauma().getJasenet()) {
             if (jasen.getTavoite() == ElaimenTavoite.LISAANNY && jasen.onkoLaumanAlueella()) {
-                this.setTavoiteRuutu(jasen.getRuutu());
+                this.setTavoiteRuutu(jasen.getOmaRuutu());
                 break;
             }
         }
-        this.setTavoiteRuutu(this.getLauma().getRuutu());
+        this.setTavoiteRuutu(this.getLauma().getOmaRuutu());
     }
     
     public void maaritaTavoiteRuutu() {
