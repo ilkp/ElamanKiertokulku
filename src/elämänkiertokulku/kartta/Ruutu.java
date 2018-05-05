@@ -1,6 +1,8 @@
 
-package elämänkiertokulku.simulaatio;
+package elämänkiertokulku.kartta;
 
+import elämänkiertokulku.simulaatio.Elain;
+import elämänkiertokulku.simulaatio.Lauma;
 import java.util.ArrayList;
 import java.util.List;
 

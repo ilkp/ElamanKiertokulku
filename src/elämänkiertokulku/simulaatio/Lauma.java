@@ -1,6 +1,7 @@
 
 package elämänkiertokulku.simulaatio;
 
+import elämänkiertokulku.kartta.Ruutu;
 import elämänkiertokulku.kontrolleri.Kontrolleri;
 import java.util.ArrayList;
 import java.util.List;
