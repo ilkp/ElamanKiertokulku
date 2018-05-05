@@ -17,6 +17,8 @@ import javafx.stage.Stage;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 
 
@@ -35,6 +37,15 @@ public class Gui extends Application {
     public void setKartta(Kartta kartta) {
         this.kartta = kartta;
     }
+    
+    //Gui Painikkeett ja jne.
+    private Slider nopeusSäätö;
+    private Button pause;
+    //Tarvitaanko / Halutaanko ?
+    private Button lisääKasvisSyöjäLauma;
+    private Button lisääLihanSyöjäLauma;
+    private Button lisääKasvisSyöjä;
+    private Button lisääLihanSyöjä;
     
     //Gui piirron muuttujat
     private GraphicsContext gc;
@@ -69,6 +80,7 @@ public class Gui extends Application {
         TimerTask timerTask = new TimerAjo(this);
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(timerTask, 0, 200);
+        
     }
     
     public static void main(String[] args) throws InterruptedException {
