@@ -8,7 +8,7 @@ import elämänkiertokulku.kontrolleri.Kontrolleri;
 public class Elain extends Liikuteltava {
     private double kuolintodennakoisyys;
     private final Lauma omaLauma;
-    private int ruokatilanne;
+    private double ruokatilanne;
     private ElaimenTavoite tavoite;
     
     public Elain(Kontrolleri kontrolleri, int id, int nopeus, Ruutu omaRuutu, Lauma lauma) {
@@ -18,12 +18,12 @@ public class Elain extends Liikuteltava {
     }
     
     //Alla getterit ja setterit
-    public int getRuokatilanne() {
+    public double getRuokatilanne() {
         return ruokatilanne;
     }
 
     //Käytä vain testaukseen. Simulaatiossa käytä 'vahennaRuoka(int muutos)' tai 'lisaaRuoka(int muutos)'
-    public void setRuokatilanne(int ruokatilanne) {
+    public void setRuokatilanne(double ruokatilanne) {
         this.ruokatilanne = ruokatilanne;
     }
     
@@ -74,7 +74,7 @@ public class Elain extends Liikuteltava {
         System.out.println(this.getId()+" kuoli");
     }
     
-    public void lisaaRuoka(int muutos) {
+    public void lisaaRuoka(double muutos) {
         if (this.ruokatilanne + muutos < 100) {
             this.ruokatilanne += muutos;
         } else {
@@ -82,7 +82,7 @@ public class Elain extends Liikuteltava {
         }
     }
     
-    public void vahennaRuoka(int muutos) {
+    public void vahennaRuoka(double muutos) {
         if (this.ruokatilanne - muutos > 0) {
             this.ruokatilanne += muutos;
         } else {

@@ -66,7 +66,7 @@ public class Kontrolleri {
         for (Ruutu[] ruudut : this.kartta.getRuudut()) {
             for (Ruutu ruutu : ruudut) {
                 if (ruutu.getKasvaakoRuoka()) {
-                    ruutu.lisaaKasviruoka(1);
+                    ruutu.lisaaKasviruoka(0.1);
                 }
             }
         }

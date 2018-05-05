@@ -44,10 +44,11 @@ public class Kasvinsyoja extends Elain {
         } else {
             this.tapaElain();
         }
+        this.vahennaRuoka(0.5);
     }
     
     public void syo() {
-        int ruudunRuoka = this.getOmaRuutu().getKasviruoka();
+        double ruudunRuoka = this.getOmaRuutu().getKasviruoka();
         if (ruudunRuoka < 5) {
             this.lisaaRuoka(ruudunRuoka);
             this.getOmaRuutu().vahennaKasviRuoka(ruudunRuoka);
@@ -97,23 +98,31 @@ public class Kasvinsyoja extends Elain {
     public Ruutu loydaLahinRuoka() {
         Ruutu[][] ruudut = this.getKontrolleri().getKartta().getRuudut();
         Ruutu oma = this.getOmaRuutu();
+        Ruutu vara = null;
         int skannauksenAloitus = -1;
         for (int i = 0; i < 4; i++) {
             for (int j = skannauksenAloitus; j < Math.abs(skannauksenAloitus) + 1; j++) {
                 for (int k = skannauksenAloitus; k < Math.abs(skannauksenAloitus) + 1; k++) {
                     if (ruudut[oma.getxKoord() + j][oma.getyKoord() + k].getKasviruoka() > 0) {
-                        return ruudut[oma.getxKoord() + j][oma.getyKoord() + k];
+                        if (ruudut[oma.getxKoord() + j][oma.getyKoord() + k].getElaimet().size() > 0) {
+                            vara = ruudut[oma.getxKoord() + j][oma.getyKoord() + k];
+                        } else {
+                            return ruudut[oma.getxKoord() + j][oma.getyKoord() + k];
+                        }
                     }
                 }
             }
             skannauksenAloitus--;
+        }
+        if (vara != null) {
+            return vara;
         }
         return this.getLauma().getOmaRuutu();
     }
     
     public void loydaLisaantyja() {
         for (Elain jasen : this.getLauma().getJasenet()) {
-            if (jasen.getTavoite() == ElaimenTavoite.LISAANNY && jasen.onkoLaumanAlueella()) {
+            if (jasen.getId() != this.getId() && jasen.getTavoite() == ElaimenTavoite.LISAANNY && jasen.onkoLaumanAlueella()) {
                 this.setTavoiteRuutu(jasen.getOmaRuutu());
                 break;
             }
