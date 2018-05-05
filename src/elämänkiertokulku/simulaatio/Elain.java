@@ -1,40 +1,23 @@
 
 package elämänkiertokulku.simulaatio;
 
+import elämänkiertokulku.kartta.Ruutu;
+import elämänkiertokulku.kontrolleri.Kontrolleri;
 
-public class Elain {
-    private int id;
+
+public class Elain extends Liikuteltava {
     private double kuolintodennakoisyys;
     private final Lauma omaLauma;
-    private Ruutu ruutu;
-    private Ruutu tavoiteRuutu;
     private int ruokatilanne;
     private ElaimenTavoite tavoite;
     
-    public Elain(int id, Ruutu ruutu, Lauma lauma) {
-        this.id = id;
-        this.ruutu = ruutu;
+    public Elain(Kontrolleri kontrolleri, int id, int nopeus, Ruutu omaRuutu, Lauma lauma) {
+        super (kontrolleri, id, nopeus, omaRuutu);
         this.omaLauma = lauma;
         this.kuolintodennakoisyys = 0.01;
     }
     
     //Alla getterit ja setterit
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Ruutu getRuutu() {
-        return ruutu;
-    }
-
-    public void setRuutu(Ruutu ruutu) {
-        this.ruutu = ruutu;
-    }
-
     public int getRuokatilanne() {
         return ruokatilanne;
     }
@@ -52,14 +35,6 @@ public class Elain {
         this.tavoite = tavoite;
     }
 
-    public Ruutu getTavoiteRuutu() {
-        return tavoiteRuutu;
-    }
-
-    public void setTavoiteRuutu(Ruutu tavoiteRuutu) {
-        this.tavoiteRuutu = tavoiteRuutu;
-    }
-
     public double getKuolintodennakoisyys() {
         return kuolintodennakoisyys;
     }
@@ -73,43 +48,30 @@ public class Elain {
     }
     
     
-    
-    
     //Alla omat metodit
     
     // Metodin nimeämistä varten, käyttö aliluokassa
     public void maaritaTavoite(){}
     
-    // Metodia kutsuu eläimen oma lauma. ajaElain testaa kuoleeko eläin ja tekee tarvittavat toimenpiteet.
+    // Metodin nimeämistä varten, käyttö aliluokassa
     public void ajaElain() {
         
-        if (!kuoleekoElain()) {
-            maaritaTavoite();
-            
-            if (this.tavoite == ElaimenTavoite.PAKENE) {
-                // implement
-            } else if (this.tavoite == ElaimenTavoite.LIIKU_LAHIN_RUOKA) {
-                
-            }
-            
-        } else {
-            tapaElain();
-        }
     }
     
     public boolean kuoleekoElain() {
         double rnd = Math.random();
-        if (rnd < this.kuolintodennakoisyys) {
-            return true;
+        if (rnd < this.kuolintodennakoisyys * (1 + (100 - this.ruokatilanne) / 100)) {
+            return false; // KUULUU OLLA TRUE, FALSE VAIN TESTAUKSEEN
         }
         this.kuolintodennakoisyys += 0.005;
         return false;
     }
     
     public void tapaElain() {
-        this.ruutu.lisaaLiharuoka(100);
+        this.getOmaRuutu().lisaaLiharuoka(100);
         this.omaLauma.siirraPoistettaviin(this);
-        this.ruutu.getElaimet().remove(this);
+        this.getOmaRuutu().getElaimet().remove(this);
+        System.out.println(this.getId()+" kuoli");
     }
     
     public void lisaaRuoka(int muutos) {
@@ -128,19 +90,24 @@ public class Elain {
         }
     }
     
+    public void lisaanny(Elain elain) {
+        if (elain.getLauma() == this.getLauma() && elain.getOmaRuutu()== this.getOmaRuutu()&& elain.getTavoite() == ElaimenTavoite.LISAANNY) {
+            int nopeusMutaatio = this.getKontrolleri().getRandom().nextInt(3) - 1;
+            int jalkelaisenNopeus = (int)(this.getNopeus() + elain.getNopeus()) / 2 + nopeusMutaatio;
+            this.getLauma().lisaaJasen(new Kasvinsyoja(this.getKontrolleri(), this.getKontrolleri().seuraavaId(), jalkelaisenNopeus, this.getOmaRuutu(), this.getLauma()));
+            this.ruokatilanne -= 50;
+            elain.setRuokatilanne(elain.getRuokatilanne() - 50);
+        }
+    }
+    
     // tarkistaa onko eläin oman lauman alueella
     public boolean onkoLaumanAlueella() {
         int alueenKoko = this.omaLauma.getAlueenKoko();
-        int xKoord = this.ruutu.getxKoord();
-        int yKoord = this.ruutu.getyKoord();
-        int laumanXKoord = this.omaLauma.getRuutu().getxKoord();
-        int laumanYKoord = this.omaLauma.getRuutu().getyKoord();
+        int xKoord = this.getOmaRuutu().getxKoord();
+        int yKoord = this.getOmaRuutu().getyKoord();
+        int laumanXKoord = this.omaLauma.getOmaRuutu().getxKoord();
+        int laumanYKoord = this.omaLauma.getOmaRuutu().getyKoord();
         return xKoord > laumanXKoord - alueenKoko && xKoord < laumanXKoord + alueenKoko && yKoord > laumanYKoord - alueenKoko && yKoord < laumanYKoord + alueenKoko;
     }
     
-    
-    @Override
-    public String toString() {
-        return "id "+this.id+":ruoka "+this.ruokatilanne;
-    }
 }

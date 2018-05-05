@@ -1,6 +1,8 @@
 
-package elämänkiertokulku.simulaatio;
+package elämänkiertokulku.kartta;
 
+import elämänkiertokulku.simulaatio.Elain;
+import elämänkiertokulku.simulaatio.Lauma;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +13,8 @@ public class Ruutu {
     private boolean kasvattaakoRuokaa;
     private int kasviruoka;
     private int liharuoka;
-    private List laumat = new ArrayList();
-    private List elaimet = new ArrayList();
+    private List<Lauma> laumat = new ArrayList();
+    private List<Elain> elaimet = new ArrayList();
 
     public Ruutu(int xKoord, int yKoord, int ruoka, boolean kasvaakoRuoka) {
         this.xKoord = xKoord;
@@ -112,6 +114,21 @@ public class Ruutu {
             this.liharuoka -= maara;
         } else {
             this.liharuoka = 0;
+        }
+    }
+    
+    public void poistaIdMukaan(int id) {
+        for (Lauma lauma : this.laumat) {
+            if (lauma.getId() == id) {
+                this.laumat.remove(lauma);
+                return;
+            }
+        }
+        for (Elain elain : this.elaimet) {
+            if (elain.getId() == id) {
+                this.elaimet.remove(elain);
+                return;
+            }
         }
     }
     
