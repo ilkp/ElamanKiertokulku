@@ -17,3 +17,6 @@ GUI Juttuja:
     ElämänkiertokulkuTesti filestä tehty koitan vielä ettiä miten/jos sais korjattuu sen sillai kivemmaks. Ton lisäks mä pudotin pois sen scene builderilla
     tehdyn osuuden kun sen ymmärtäminen vei multa terveyden ja järjen koitan viel kattoo jos sen saa takas mut toistaseks nyt gui toimii ilman sitä
     mikä myös johtaa siihen että meillä ei oo mitää painikkeita tai slidereita ainakaan vielä ne pitää sit vaa hardcodata jos ne haluaa mut sillai.
+
+    Ois varmaa hyvä laittaa joku indikaattori siitä onko niitä elukoita enemmä ku per ruutu toho gui:hin sillä nysse näyttää siltä että ne elukat katoaa
+    jos ne kävelee toistensa kans samas ruudus.

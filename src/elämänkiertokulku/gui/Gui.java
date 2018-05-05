@@ -19,10 +19,7 @@ import java.util.TimerTask;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 
-/**
- *
- * @author Drsor
- */
+
 public class Gui extends Application {
     
     private Kartta kartta;
@@ -110,12 +107,13 @@ public class Gui extends Application {
             }
         }
     }
-    
+    //Korja tämä se palauttaa aina nolla tai yks
     private double ruokaPerKymmenen (int ruoka) {
         //return ((ruoka+5)/10)*10/100;
         return (double)ruoka/100;
     }
     
+    //Piirto methodit enemmä tai vähemmä ittestää selviä eikö?
     private void piirräKasviRuoka (int i, int j, double ruutuKoko, double ruoka) {
         Color ruokaColor = Color.rgb(20, 200, 20, ruoka);
         gc.setFill(ruokaColor);
