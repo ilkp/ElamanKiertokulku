@@ -2,6 +2,7 @@
 package elämänkiertokulku.kontrolleri;
 
 import elämänkiertokulku.kartta.Kartta;
+import elämänkiertokulku.kartta.Ruutu;
 import elämänkiertokulku.simulaatio.Lauma;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +60,16 @@ public class Kontrolleri {
         this.laumat.forEach((lauma) -> {
             lauma.ajaLauma();
         });
+    }
+    
+    public void ajaRuudut() {
+        for (Ruutu[] ruudut : this.kartta.getRuudut()) {
+            for (Ruutu ruutu : ruudut) {
+                if (ruutu.getKasvaakoRuoka()) {
+                    ruutu.lisaaKasviruoka(1);
+                }
+            }
+        }
     }
     
     public int seuraavaId() {

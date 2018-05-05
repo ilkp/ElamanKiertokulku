@@ -93,6 +93,7 @@ public class Kasvinsyoja extends Elain {
     }
     
     // Eläimen tavoiteruuduksi asetetaan ensimmäinen löydetty ruutu, jossa on ruokaa tai oman lauman ruutu, jos ruokaa ei löydy.
+    // Ruokaa haetaan 4x4 alueelta sisältä ulos päin.
     public Ruutu loydaLahinRuoka() {
         Ruutu[][] ruudut = this.getKontrolleri().getKartta().getRuudut();
         Ruutu oma = this.getOmaRuutu();

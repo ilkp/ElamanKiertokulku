@@ -11,6 +11,6 @@ public class ElämänKiertokulkuTesti {
     public static void main(String[] args) throws InterruptedException {
         TimerTask timerTask = new TimerAjo();
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(timerTask, 0, 1000);
+        timer.scheduleAtFixedRate(timerTask, 0, 500);
     }
 }

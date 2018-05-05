@@ -9,3 +9,4 @@ Timerin nopeutta voi säätää mainista "timer.scheduleAtFixedRate(timerTask, 0
 Testauksen jälkeen palautettavat asiat:
     -Eläin luokan kuoleekoEläin() metodin boolean arvo
     -Laumat ja Eläimet tällä hetkellä placeholdereita/testausta varten
+    -Kartta spawnerin testauskoordinaatit

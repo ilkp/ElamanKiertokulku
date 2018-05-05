@@ -47,10 +47,12 @@ public class Kartta {
                 spawnerinXkoord = (int) (Math.random() * (this.ruudut.length - 2)) + 1;
                 spawnerinYkoord = (int) (Math.random() * (this.ruudut[0].length - 2)) + 1;
             } while(!tarkistaSpawnerinSijainti(spawnerinXkoord, spawnerinYkoord, sijainnit));
-            //
+            
+            // TESTAUSTA VARTEN
             spawnerinXkoord = 7;
             spawnerinYkoord = 7;
-            //
+            // TESTAUSTA VARTEN
+            
             if (sijainnit.get(spawnerinXkoord) == null) {
                 Set<Integer> ySarake = new HashSet();
                 ySarake.add(spawnerinYkoord);

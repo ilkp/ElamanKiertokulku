@@ -59,6 +59,7 @@ public class Lauma extends Liikuteltava {
         return null;
     }
     
+    // Nimeämistä varten. Käyttö aliluokissa
     public void ajaLauma() {
         
     }

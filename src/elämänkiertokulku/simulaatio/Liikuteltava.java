@@ -57,6 +57,9 @@ public class Liikuteltava {
         this.omaRuutu = omaRuutu;
     }
     
+    
+    
+    
     public int etaisyysRuudusta(Ruutu ruutu) {
         int yMuutos = ruutu.getyKoord() - this.omaRuutu.getyKoord();
         int xMuutos = ruutu.getxKoord() - this.omaRuutu.getxKoord() - yMuutos;
