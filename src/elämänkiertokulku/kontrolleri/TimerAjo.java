@@ -1,22 +1,28 @@
 
 package elämänkiertokulku.kontrolleri;
 
+import elämänkiertokulku.simulaatio.Kasvinsyoja;
 import elämänkiertokulku.simulaatio.Lauma;
+import elämänkiertokulku.simulaatio.LaumaKasvinsyoja;
+import java.util.TimerTask;
 
-/*
-EI KÄYTÖSSÄ, KÄYTETÄÄN UUTTA TAPAA -> Timer
-Timer löytyy mainista ElämänKiertokulkuTesti luokasta
-Kellon tikillä tapahtuva ajo on luokan TimerAjo metodissa run()
-*/
 
-public class Kello {
-    private Kontrolleri kontrolleri;
-    private Runnable helloRunnable;
 
+public class TimerAjo extends TimerTask {
+    private final Kontrolleri kontrolleri;
     
-    public Kello (Kontrolleri kontrolleri) {
-        this.kontrolleri = kontrolleri;
-        helloRunnable = () -> {
+    public TimerAjo() {
+        kontrolleri = new Kontrolleri(10, 10);
+        kontrolleri.getKartta().alusta();
+        LaumaKasvinsyoja testilauma = new LaumaKasvinsyoja(kontrolleri, kontrolleri.seuraavaId(), 10, kontrolleri.getKartta().getRuudut()[4][4]);
+        testilauma.lisaaJasen(new Kasvinsyoja(kontrolleri, kontrolleri.seuraavaId(), 10, testilauma.getOmaRuutu(), testilauma));
+        testilauma.getJasenet().get(0).setRuokatilanne(40);
+        kontrolleri.lisaaLauma(testilauma);
+    }
+    
+    @Override
+    public void run() {
+        try {
             kontrolleri.ajaLaumat();
             Lauma lauma = (Lauma) kontrolleri.getLaumat().get(0);
             kontrolleri.getKartta().piirraKartta();
@@ -36,11 +42,9 @@ public class Kello {
             
             this.kontrolleri.tikkaa();
             System.out.println(this.kontrolleri.getTick());
-        };
+        } catch (Exception e) {
+            
+        }
     }
     
-    public Runnable getRunnable() {
-        return this.helloRunnable;
-    }
-
 }

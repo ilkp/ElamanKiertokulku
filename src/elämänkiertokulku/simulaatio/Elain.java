@@ -60,7 +60,7 @@ public class Elain extends Liikuteltava {
     public boolean kuoleekoElain() {
         double rnd = Math.random();
         if (rnd < this.kuolintodennakoisyys * (1 + (100 - this.ruokatilanne) / 100)) {
-            return true;
+            return false; // KUULUU OLLA TRUE, FALSE VAIN TESTAUKSEEN
         }
         this.kuolintodennakoisyys += 0.005;
         return false;
@@ -70,6 +70,7 @@ public class Elain extends Liikuteltava {
         this.getOmaRuutu().lisaaLiharuoka(100);
         this.omaLauma.siirraPoistettaviin(this);
         this.getOmaRuutu().getElaimet().remove(this);
+        System.out.println(this.getId()+" kuoli");
     }
     
     public void lisaaRuoka(int muutos) {

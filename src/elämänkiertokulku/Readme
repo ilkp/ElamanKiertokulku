@@ -1,0 +1,11 @@
+
+
+
+Ei käytetä enää Kello luokkaa. Vastaisuudessa TimerAjo luokalla. Vanha kello randomisti pysähtyi aina. Timer ei näytä sitä tekevän.
+TimerAjo run() metodiin laitetaan mitä halutaan tehtävän kun kello tikkaa.
+Timerin nopeutta voi säätää mainista "timer.scheduleAtFixedRate(timerTask, 0, 1000);". Viimeinen luku millisekunteina tikin aikaväli
+
+
+Testauksen jälkeen palautettavat asiat:
+    -Eläin luokan kuoleekoEläin() metodin boolean arvo
+    -Laumat ja Eläimet tällä hetkellä placeholdereita/testausta varten
