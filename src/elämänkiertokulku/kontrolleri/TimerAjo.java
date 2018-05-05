@@ -24,9 +24,6 @@ public class TimerAjo extends TimerTask {
         testilauma.lisaaJasen(new Kasvinsyoja(kontrolleri, kontrolleri.seuraavaId(), 10, testilauma.getOmaRuutu(), testilauma));
         testilauma.lisaaJasen(new Kasvinsyoja(kontrolleri, kontrolleri.seuraavaId(), 10, kontrolleri.getKartta().getRuudut()[4][7], testilauma));
         
-        testilauma.getJasenet().forEach((jasen) -> {
-            jasen.setRuokatilanne(40);
-        });
         kontrolleri.lisaaLauma(testilauma);
         
         gui = newGui;
@@ -40,22 +37,7 @@ public class TimerAjo extends TimerTask {
         try {
             kontrolleri.ajaLaumat();
             Lauma lauma = (Lauma) kontrolleri.getLaumat().get(0);
-            kontrolleri.getKartta().piirraKartta();
-            
             gui.piirräKartta();
-            
-            System.out.println("Lauman x: "+lauma.getOmaRuutu().getxKoord() + ",  y: " + lauma.getOmaRuutu().getyKoord());
-            System.out.println("Lauman tavoite: "+lauma.getTavoite());
-            System.out.println("Lauman tavoiteruutu: "+lauma.getTavoiteRuutu());
-            System.out.println("liike vaihe: "+lauma.getLiikeVaihe());
-            System.out.println("");
-            
-            System.out.println("Eläimen x: "+lauma.getJasenet().get(0).getOmaRuutu().getxKoord() + ",  y: " + lauma.getJasenet().get(0).getOmaRuutu().getyKoord());
-            System.out.println("Eläimen tavoite: "+lauma.getJasenet().get(0).getTavoite());
-            System.out.println("Eläimen tavoiteruutu: "+lauma.getJasenet().get(0).getTavoiteRuutu());
-            System.out.println("liike vaihe: "+lauma.getJasenet().get(0).getLiikeVaihe());
-            System.out.println("Ruokatilanne: "+lauma.getJasenet().get(0).getRuokatilanne());
-            
             this.kontrolleri.tikkaa();
             System.out.println(this.kontrolleri.getTick());
             kontrolleri.ajaRuudut();

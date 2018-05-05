@@ -8,7 +8,7 @@ import elämänkiertokulku.kontrolleri.Kontrolleri;
 public class Elain extends Liikuteltava {
     private double kuolintodennakoisyys;
     private final Lauma omaLauma;
-    private double ruokatilanne;
+    private double ruokatilanne = 0;
     private ElaimenTavoite tavoite;
     
     public Elain(Kontrolleri kontrolleri, int id, int nopeus, Ruutu omaRuutu, Lauma lauma) {
@@ -59,9 +59,9 @@ public class Elain extends Liikuteltava {
     }
     
     public boolean kuoleekoElain() {
-        double rnd = Math.random();
-        if (rnd < this.kuolintodennakoisyys * (1 + (100 - this.ruokatilanne) / 100)) {
-            return false; // KUULUU OLLA TRUE, FALSE VAIN TESTAUKSEEN
+        int rnd = this.getKontrolleri().getRandom().nextInt(101) + 1;
+        if (rnd < this.kuolintodennakoisyys) {
+            return true;
         }
         this.kuolintodennakoisyys += 0.005;
         return false;
@@ -95,8 +95,8 @@ public class Elain extends Liikuteltava {
             int nopeusMutaatio = this.getKontrolleri().getRandom().nextInt(3) - 1;
             int jalkelaisenNopeus = (int)(this.getNopeus() + elain.getNopeus()) / 2 + nopeusMutaatio;
             this.getLauma().lisaaJasen(new Kasvinsyoja(this.getKontrolleri(), this.getKontrolleri().seuraavaId(), jalkelaisenNopeus, this.getOmaRuutu(), this.getLauma()));
-            this.ruokatilanne -= 50;
-            elain.setRuokatilanne(elain.getRuokatilanne() - 50);
+            this.ruokatilanne = 0;
+            elain.setRuokatilanne(0);
         }
     }
     

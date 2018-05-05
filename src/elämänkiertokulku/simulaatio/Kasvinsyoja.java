@@ -44,7 +44,7 @@ public class Kasvinsyoja extends Elain {
         } else {
             this.tapaElain();
         }
-        this.vahennaRuoka(0.5);
+        //this.vahennaRuoka(0.5);
     }
     
     public void syo() {
@@ -59,7 +59,7 @@ public class Kasvinsyoja extends Elain {
     }
     
     public boolean onkoOmassaRuudussaKasviruokaa() {
-        return this.getOmaRuutu().getKasviruoka() != 0;
+        return this.getOmaRuutu().getKasviruoka() > 20;
     }
     
     @Override
@@ -103,7 +103,7 @@ public class Kasvinsyoja extends Elain {
         for (int i = 0; i < 4; i++) {
             for (int j = skannauksenAloitus; j < Math.abs(skannauksenAloitus) + 1; j++) {
                 for (int k = skannauksenAloitus; k < Math.abs(skannauksenAloitus) + 1; k++) {
-                    if (ruudut[oma.getxKoord() + j][oma.getyKoord() + k].getKasviruoka() > 0) {
+                    if (ruudut[oma.getxKoord() + j][oma.getyKoord() + k].getKasviruoka() > 20) {
                         if (ruudut[oma.getxKoord() + j][oma.getyKoord() + k].getElaimet().size() > 0) {
                             vara = ruudut[oma.getxKoord() + j][oma.getyKoord() + k];
                         } else {
@@ -122,7 +122,7 @@ public class Kasvinsyoja extends Elain {
     
     public void loydaLisaantyja() {
         for (Elain jasen : this.getLauma().getJasenet()) {
-            if (jasen.getId() != this.getId() && jasen.getTavoite() == ElaimenTavoite.LISAANNY && jasen.onkoLaumanAlueella()) {
+            if (jasen.getId() != this.getId() && jasen.getRuokatilanne() > 80) {
                 this.setTavoiteRuutu(jasen.getOmaRuutu());
                 break;
             }
