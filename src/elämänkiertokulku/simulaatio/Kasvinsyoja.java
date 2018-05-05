@@ -36,17 +36,7 @@ public class Kasvinsyoja extends Elain {
                 case SYO:
                     this.syo();
                     break;
-                case LIIKU_LAHIN_RUOKA:
-                    System.out.println("testi liiku lahin ruoka");
-                    loydaLahinRuoka();
-                    this.liiku();
-                    break;
-                case LIIKU_RUOKA:
-                    loydaLahinRuoka();
-                    this.liiku();
-                    break;
-                case LIIKU_LAUMA:
-                    this.setTavoiteRuutu(this.getLauma().getOmaRuutu());
+                case LIIKU:
                     this.liiku();
                     break;
             }
@@ -67,10 +57,7 @@ public class Kasvinsyoja extends Elain {
     }
     
     public boolean onkoOmassaRuudussaKasviruokaa() {
-        if (this.getOmaRuutu().getKasviruoka() != 0) {
-            return true;
-        }
-        return false;
+        return this.getOmaRuutu().getKasviruoka() != 0;
     }
     
     @Override
@@ -79,40 +66,47 @@ public class Kasvinsyoja extends Elain {
             this.setTavoite(ElaimenTavoite.PAKENE);
             
         } else if (this.getRuokatilanne() < 10) {
-            this.setTavoite(ElaimenTavoite.LIIKU_LAHIN_RUOKA);
             if (this.onkoOmassaRuudussaKasviruokaa()) {
                 this.setTavoite(ElaimenTavoite.SYO);
+                this.setTavoiteRuutu(null);
+            } else {
+                this.setTavoite(ElaimenTavoite.LIIKU);
+                this.setTavoiteRuutu(loydaLahinRuoka());
             }
             
         } else if (!this.onkoLaumanAlueella()) {
-            this.setTavoite(ElaimenTavoite.LIIKU_LAUMA);
+            this.setTavoite(ElaimenTavoite.LIIKU);
+            this.setTavoiteRuutu(this.getLauma().getOmaRuutu());
             
         } else if (this.getRuokatilanne() > 80) {
             this.setTavoite(ElaimenTavoite.LISAANNY);
             
         } else if (!this.onkoOmassaRuudussaKasviruokaa()) {
-            this.setTavoite(ElaimenTavoite.LIIKU_RUOKA);
+            this.setTavoite(ElaimenTavoite.LIIKU);
+            this.setTavoiteRuutu(loydaLahinRuoka());
             
         } else {
             this.setTavoite(ElaimenTavoite.SYO);
+            this.setTavoiteRuutu(null);
         }
     }
     
     // Eläimen tavoiteruuduksi asetetaan ensimmäinen löydetty ruutu, jossa on ruokaa tai oman lauman ruutu, jos ruokaa ei löydy.
-    public void loydaLahinRuoka() {
-        int alueenKoko = this.getLauma().getAlueenKoko();
-        Ruutu[][] ruudut = this.getLauma().getKontrolleri().getKartta().getRuudut();
-        for (int i = -alueenKoko; i < alueenKoko; i++) {
-            for (int j = -alueenKoko; j < alueenKoko; j++) {
-                int xKoord = this.getOmaRuutu().getxKoord() + i;
-                int yKoord = this.getOmaRuutu().getyKoord() + j;
-                if (ruudut[xKoord][yKoord].getKasviruoka() != 0) {
-                    this.setTavoiteRuutu(ruudut[xKoord][yKoord]);
-                    return;
+    public Ruutu loydaLahinRuoka() {
+        Ruutu[][] ruudut = this.getKontrolleri().getKartta().getRuudut();
+        Ruutu oma = this.getOmaRuutu();
+        int skannauksenAloitus = -1;
+        for (int i = 0; i < 4; i++) {
+            for (int j = skannauksenAloitus; j < Math.abs(skannauksenAloitus) + 1; j++) {
+                for (int k = skannauksenAloitus; k < Math.abs(skannauksenAloitus) + 1; k++) {
+                    if (ruudut[oma.getxKoord() + j][oma.getyKoord() + k].getKasviruoka() > 0) {
+                        return ruudut[oma.getxKoord() + j][oma.getyKoord() + k];
+                    }
                 }
             }
+            skannauksenAloitus--;
         }
-        this.setTavoiteRuutu(this.getLauma().getOmaRuutu());
+        return this.getLauma().getOmaRuutu();
     }
     
     public void loydaLisaantyja() {
@@ -123,11 +117,5 @@ public class Kasvinsyoja extends Elain {
             }
         }
         this.setTavoiteRuutu(this.getLauma().getOmaRuutu());
-    }
-    
-    public void maaritaTavoiteRuutu() {
-        if (this.getTavoite() == ElaimenTavoite.LIIKU_LAHIN_RUOKA) {
-            
-        }
     }
 }

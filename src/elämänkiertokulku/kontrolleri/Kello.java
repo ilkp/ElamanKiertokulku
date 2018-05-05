@@ -30,7 +30,7 @@ public class Kello {
             
             this.kontrolleri.tikkaa();
             System.out.println(this.kontrolleri.getTick());
-    };
+        };
     }
     
     public Runnable getRunnable() {

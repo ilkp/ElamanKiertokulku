@@ -71,16 +71,17 @@ public class Liikuteltava {
         Ruutu uusiRuutu = seuraavaRuutu(liikkeenSuunta());
         this.omaRuutu.poistaIdMukaan(this.id);
         this.omaRuutu = uusiRuutu;
-        if (this.getClass() == Lauma.class || this.getClass() == LaumaKasvinsyoja.class || this.getClass() == LaumaLihansyoja.class) {
-            uusiRuutu.lisaaLauma(this);
+        if (this instanceof Elain) {
+            uusiRuutu.lisaaElain((Elain) this);
         } else {
-            uusiRuutu.lisaaElain(this);
+            uusiRuutu.lisaaLauma((Lauma) this);
         }
         
         if (this.omaRuutu == this.tavoiteRuutu) {
             this.tavoiteRuutu = null;
         }
         
+        this.liikeVaihe = 0;
     }
     
     public int[] liikkeenSuunta() {
@@ -89,8 +90,8 @@ public class Liikuteltava {
             liikkeenXSuunta /= Math.abs(liikkeenXSuunta);
         }
         int liikkeenYSuunta = this.tavoiteRuutu.getyKoord() - this.omaRuutu.getyKoord();
-        if (liikkeenXSuunta != 0) {
-            liikkeenXSuunta /= Math.abs(liikkeenXSuunta);
+        if (liikkeenYSuunta != 0) {
+            liikkeenYSuunta /= Math.abs(liikkeenYSuunta);
         }
         return new int[] {liikkeenXSuunta, liikkeenYSuunta};
     }
