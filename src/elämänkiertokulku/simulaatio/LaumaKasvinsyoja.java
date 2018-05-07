@@ -15,9 +15,9 @@ public class LaumaKasvinsyoja extends Lauma {
     
     @Override
     public void ajaLauma() {
-        this.getJasenet().forEach((jasen) -> {
+        for (Elain jasen : this.getJasenet()) {
             jasen.ajaElain();
-        });
+        }
         
         maaritaLaumanTavoite();
         switch (this.getTavoite()) {
@@ -36,6 +36,7 @@ public class LaumaKasvinsyoja extends Lauma {
                 break;
         }
         tyhjennaPoistettavat();
+        siirraUudet();
     }
     
     @Override

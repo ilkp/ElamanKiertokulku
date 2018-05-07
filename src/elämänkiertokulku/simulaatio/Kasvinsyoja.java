@@ -22,17 +22,16 @@ public class Kasvinsyoja extends Elain {
                     break;
                 case LISAANNY:
                     List<Elain> ruudunElaimet = this.getOmaRuutu().getElaimet();
-                    boolean ruudussaLisaantyja = false;
                     for (Elain elain : ruudunElaimet) {
-                        if (elain.getId() != this.getId() && elain.getLauma() == this.getLauma() && elain.getTavoite() == ElaimenTavoite.LISAANNY) {
-                            this.lisaanny(elain);
-                            ruudussaLisaantyja = true;
+                        if (elain != this && elain.getLauma() == this.getLauma() && elain.getRuokatilanne() > 80) {
+                            this.getLauma().lisaaUusiJasen(this, elain);
+                            this.setRuokatilanne(0);
+                            elain.setRuokatilanne(0);
+                            break;
                         }
                     }
-                    if (!ruudussaLisaantyja) {
-                        loydaLisaantyja();
-                        this.liiku();
-                    }
+                    loydaLisaantyja();
+                    this.liiku();
                     break;
                 case SYO:
                     this.syo();
@@ -67,15 +66,6 @@ public class Kasvinsyoja extends Elain {
         if (1 == 0) {
             this.setTavoite(ElaimenTavoite.PAKENE);
             
-        } else if (this.getRuokatilanne() < 10) {
-            if (this.onkoOmassaRuudussaKasviruokaa()) {
-                this.setTavoite(ElaimenTavoite.SYO);
-                this.setTavoiteRuutu(null);
-            } else {
-                this.setTavoite(ElaimenTavoite.LIIKU);
-                this.setTavoiteRuutu(loydaLahinRuoka());
-            }
-            
         } else if (!this.onkoLaumanAlueella()) {
             this.setTavoite(ElaimenTavoite.LIIKU);
             this.setTavoiteRuutu(this.getLauma().getOmaRuutu());
@@ -99,11 +89,12 @@ public class Kasvinsyoja extends Elain {
         Ruutu[][] ruudut = this.getKontrolleri().getKartta().getRuudut();
         Ruutu oma = this.getOmaRuutu();
         Ruutu vara = null;
-        int skannauksenAloitus = -1;
+        int skannauksenAloitus = 0;
         for (int i = 0; i < 4; i++) {
+            skannauksenAloitus--;
             for (int j = skannauksenAloitus; j < Math.abs(skannauksenAloitus) + 1; j++) {
                 for (int k = skannauksenAloitus; k < Math.abs(skannauksenAloitus) + 1; k++) {
-                    if (ruudut[oma.getxKoord() + j][oma.getyKoord() + k].getKasviruoka() > 0) {
+                    if (this.getLauma().ruutuLaumanAlueella(oma.getxKoord() + j, oma.getyKoord() + k) && ruudut[oma.getxKoord() + j][oma.getyKoord() + k].getKasviruoka() > 0) {
                         if (ruudut[oma.getxKoord() + j][oma.getyKoord() + k].getElaimet().size() > 0) {
                             vara = ruudut[oma.getxKoord() + j][oma.getyKoord() + k];
                         } else {
@@ -112,7 +103,6 @@ public class Kasvinsyoja extends Elain {
                     }
                 }
             }
-            skannauksenAloitus--;
         }
         if (vara != null) {
             return vara;

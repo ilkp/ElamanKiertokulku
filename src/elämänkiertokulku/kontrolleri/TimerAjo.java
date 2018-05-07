@@ -35,22 +35,16 @@ public class TimerAjo extends TimerTask {
     
     @Override
     public void run() {
-        try {
+        //try {
             kontrolleri.ajaLaumat();
             Lauma lauma = (Lauma) kontrolleri.getLaumat().get(0);
             gui.piirräKartta();
             this.kontrolleri.tikkaa();
             System.out.println(this.kontrolleri.getTick());
             kontrolleri.ajaRuudut();
-            
-            for (Elain jasen : lauma.getJasenet()) {
-                System.out.println("id: "+jasen.getId());
-                System.out.println("Tavoite: "+jasen.getTavoite());
-                System.out.println("Tavoiteruutu x: "+jasen.getTavoiteRuutu().getxKoord()+ " y: "+jasen.getTavoiteRuutu().getyKoord());
-            }
-        } catch (Exception e) {
-            
-        }
+        /*} catch (Exception e) {
+            System.out.println(e);
+        }*/
     }
     
 }
