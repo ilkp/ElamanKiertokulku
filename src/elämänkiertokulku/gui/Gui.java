@@ -16,23 +16,18 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import java.util.Timer;
 import java.util.TimerTask;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 
 
 public class Gui extends Application {
     
     private Kartta kartta;
-    
-//    public Gui (Kartta kartta) {
-//        this.kartta = kartta;
-//    }
-
-    public Kartta getKartta() {
-        return kartta;
-    }
 
     public void setKartta(Kartta kartta) {
         this.kartta = kartta;
@@ -41,6 +36,7 @@ public class Gui extends Application {
     //Gui Painikkeett ja jne.
     private Slider nopeusSäätö;
     private Button pause;
+    private Button play;
     //Tarvitaanko / Halutaanko ?
     private Button lisääKasvisSyöjäLauma;
     private Button lisääLihanSyöjäLauma;
@@ -51,12 +47,15 @@ public class Gui extends Application {
     private GraphicsContext gc;
     private Canvas primaryCanvas;
     private Canvas backgroundCanvas;
+    private Pane controlPane;
     private double leveys;
     private double korkeus;
-    private Image kasvisElain = new Image("/elämänkiertokulku/gui/sheep.png");
-    private Image lihaElain = new Image("/elämänkiertokulku/gui/wolf.png");
-    //BenchMark
-    private int päivitysKerta;
+    private final Image kasvisElain = new Image("/elämänkiertokulku/gui/sheep.png");
+    private final Image lihaElain = new Image("/elämänkiertokulku/gui/wolf.png");
+    private final Image lihaRuoka = new Image("/elämänkiertokulku/gui/Liharuoka.png");
+    
+    public TimerTask timerTask;
+    public Timer timer;
     
     //javafx käyttää start methodia main sijasta
     //Pitää selvittää miten toimii mainissa jos ollenkaa
@@ -65,26 +64,89 @@ public class Gui extends Application {
     //NEtbeans on muchos huevos;
     @Override
     public void start(Stage primaryStage) {
-        
+        //Luodaan root ja scene joille gui palat
+        //asetetaan
         Group root = new Group();
         Scene scene = new Scene(root, 640, 740);
         System.out.println("GUI Init");
+        
+        //Luodan Canvakset joille gui
+        //piirretään sekä asetetaan ne rootille
         primaryCanvas = new Canvas(640, 640);
         backgroundCanvas = new Canvas (640, 640);
         root.getChildren().add(backgroundCanvas);
         root.getChildren().add(primaryCanvas);
-
+        
+        //Täytetään kartta tarvittavilla painikkeilla
+        //asetettuna panelle
+        controlPane = new Pane();
+        controlPane.setPrefSize(640, 100);
+        controlPane.setLayoutY(640);
+        controlPane.setStyle("-fx-background-color: gray;");
+        root.getChildren().add(controlPane);
+        
+        teePause();
+        teePlay();
+        teeSlider();
+        
         primaryStage.setScene(scene);
         primaryStage.show();
         
-        TimerTask timerTask = new TimerAjo(this);
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(timerTask, 0, 100);
-        
+        timerTask = new TimerAjo(this);
+        play();
     }
     
     public static void main(String[] args) throws InterruptedException {
         launch(args);
+    }
+    
+    public void pause () {
+        timer.cancel();
+    }
+    
+    public void play () {
+        timer = new Timer();
+        //long nopeus = 1000 - ((long)nopeusSäätö.getValue()*100-100);
+        long nopeus = 200;
+        timer.scheduleAtFixedRate(timerTask, 0, nopeus);
+        
+    }
+    
+    private void teePause () {
+        pause = new Button("Pause Me!");
+        pause.setPrefSize(100, 40);
+        pause.setLayoutX(40);
+        pause.setLayoutY(30);
+        pause.setOnAction((ActionEvent event) -> {
+            pause();
+        });
+        controlPane.getChildren().add(pause);
+    }
+    
+    private void teePlay() {
+        play = new Button("Play Me!");
+        play.setPrefSize(100, 40);
+        play.setLayoutX(180);
+        play.setLayoutY(30);
+        play.setOnAction((ActionEvent event) -> {
+            play();
+        });
+        controlPane.getChildren().add(play);
+    }
+    
+    private void teeSlider () {
+        nopeusSäätö = new Slider();
+        nopeusSäätö.setMin(1);
+        nopeusSäätö.setMax(10);
+        nopeusSäätö.setValue(1);
+        nopeusSäätö.setShowTickLabels(true);
+        nopeusSäätö.setShowTickMarks(true);
+        nopeusSäätö.setSnapToTicks(true);
+        nopeusSäätö.setMajorTickUnit(1);
+        nopeusSäätö.setPrefSize(280, 20);
+        nopeusSäätö.setLayoutX(320);
+        nopeusSäätö.setLayoutY(40);
+        controlPane.getChildren().add(nopeusSäätö);
     }
     
     //Asetetaan kartan piirturi ja speksit
@@ -99,14 +161,14 @@ public class Gui extends Application {
         gc.setFill(maa);
         gc.fillRect(0, 0, leveys, korkeus);
         gc = primaryCanvas.getGraphicsContext2D();
+        
     }
     
     //Kartan piirto/päivitys methodi
     //käydään ruudut läpi ja piirretään niiden ruoka määrä
     public void piirräKartta () {
         
-        gc.clearRect(0, 0, leveys, korkeus); 
-        System.out.println("Päivitetään Kartta   " + päivitysKerta++);
+        gc.clearRect(0, 0, leveys, korkeus);
         int ruutuMaara = kartta.getRuudut().length;
         double ruutuKoko = leveys/ruutuMaara;
         for (int i = 0; i < ruutuMaara; i++) {
@@ -132,11 +194,13 @@ public class Gui extends Application {
     //Korja tämä se palauttaa aina nolla tai yks
     private double ruokaPerKymmenen (double ruoka) {
         //return ((ruoka+5)/10)*10/100;
-        return (double)ruoka/100;
+        return (double)(ruoka/100);
     }
     
     //Piirto methodit enemmä tai vähemmä ittestää selviä eikö?
     private void piirräKasviRuoka (int i, int j, double ruutuKoko, double ruoka) {
+        //Asetetaan ruoka 0 sillä gc ei voi piirtää
+        //negatiivisia lukuja!!
         if (ruoka < 0) {
             ruoka = 0;
         }
@@ -146,11 +210,14 @@ public class Gui extends Application {
             
     }
     private void piirräLihaRuoka (int i, int j, double ruutuKoko, double ruoka) {
-        Color ruokaColor = Color.rgb(200, 20, 20, ruoka);
-        gc.setStroke(ruokaColor);
-        gc.setLineWidth(ruutuKoko / 5);
-        gc.strokeOval(i*(ruutuKoko), j*(ruutuKoko), ruutuKoko, ruutuKoko);
-            
+        //Asetetaan ruoka 0 sillä gc ei voi piirtää
+        //negatiivisia lukuja!!
+        if (ruoka < 0) {
+            ruoka = 0;
+        }
+        gc.setGlobalAlpha(ruoka);
+        gc.drawImage(lihaRuoka, i*(ruutuKoko), j*(ruutuKoko), ruutuKoko, ruutuKoko);
+        gc.setGlobalAlpha(1.0);
     }
     
     private void piirräKasvisEläin (int i, int j, double ruutuKoko) {
