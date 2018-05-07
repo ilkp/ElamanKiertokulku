@@ -107,7 +107,7 @@ public class Gui extends Application {
     public void play () {
         timer = new Timer();
         //long nopeus = 1000 - ((long)nopeusSäätö.getValue()*100-100);
-        long nopeus = 200;
+        long nopeus = 100;
         timer.scheduleAtFixedRate(timerTask, 0, nopeus);
         
     }
