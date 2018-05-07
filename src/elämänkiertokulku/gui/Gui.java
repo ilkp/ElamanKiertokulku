@@ -116,9 +116,19 @@ public class Gui extends Application {
                 if (!kartta.getRuudut()[i][j].getElaimet().isEmpty()) {
                     piirräKasvisEläin (i, j, ruutuKoko);
                 }
+                if (!kartta.getRuudut()[i][j].getLaumat().isEmpty()) {
+                    debugPiirräLauma (i, j, ruutuKoko);
+                }
             }
         }
     }
+    
+    private void debugPiirräLauma (int i, int j, double ruutuKoko) {
+        Color lauma = Color.rgb(255, 255, 255, 1.0);
+        gc.setFill(lauma);
+        gc.fillRect(i*(ruutuKoko), j*(ruutuKoko), ruutuKoko/2, ruutuKoko/2);
+    }
+    
     //Korja tämä se palauttaa aina nolla tai yks
     private double ruokaPerKymmenen (double ruoka) {
         //return ((ruoka+5)/10)*10/100;
