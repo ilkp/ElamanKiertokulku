@@ -107,7 +107,7 @@ public class Elain extends Liikuteltava {
         int yKoord = this.getOmaRuutu().getyKoord();
         int laumanXKoord = this.omaLauma.getOmaRuutu().getxKoord();
         int laumanYKoord = this.omaLauma.getOmaRuutu().getyKoord();
-        return xKoord > laumanXKoord - alueenKoko && xKoord < laumanXKoord + alueenKoko && yKoord > laumanYKoord - alueenKoko && yKoord < laumanYKoord + alueenKoko;
+        return xKoord >= laumanXKoord - alueenKoko && xKoord <= laumanXKoord + alueenKoko && yKoord >= laumanYKoord - alueenKoko && yKoord <= laumanYKoord + alueenKoko;
     }
     
 }
