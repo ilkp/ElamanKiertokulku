@@ -121,12 +121,12 @@ public class Kasvinsyoja extends Elain {
     }
     
     public void loydaLisaantyja() {
+        this.setTavoiteRuutu(this.getLauma().getOmaRuutu());
         for (Elain jasen : this.getLauma().getJasenet()) {
             if (jasen.getId() != this.getId() && jasen.getRuokatilanne() > 80) {
                 this.setTavoiteRuutu(jasen.getOmaRuutu());
                 break;
             }
         }
-        this.setTavoiteRuutu(this.getLauma().getOmaRuutu());
     }
 }
