@@ -13,6 +13,7 @@ public class Ruutu {
     private boolean kasvattaakoRuokaa;
     private double kasviruoka;
     private int liharuoka;
+    private boolean cooldownilla;
     private List<Lauma> laumat = new ArrayList();
     private List<Elain> elaimet = new ArrayList();
 
@@ -90,10 +91,14 @@ public class Ruutu {
     }
     
     public void lisaaKasviruoka(double maara) {
+        double alkuperainen = this.kasviruoka;
         if (this.kasviruoka + maara < 100) {
             this.kasviruoka += maara;
         } else {
             this.kasviruoka = 100;
+        }
+        if (alkuperainen < 0 && this.kasviruoka > 0) {
+            this.cooldownilla = false;
         }
     }
     
@@ -102,6 +107,10 @@ public class Ruutu {
             this.kasviruoka -= maara;
         } else {
             this.kasviruoka = 0;
+        }
+        if (this.cooldownilla == false && this.kasviruoka <= 1) {
+            this.cooldownilla = true;
+            this.kasviruoka = -100;
         }
     }
     

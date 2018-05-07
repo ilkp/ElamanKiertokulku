@@ -127,6 +127,9 @@ public class Gui extends Application {
     
     //Piirto methodit enemmä tai vähemmä ittestää selviä eikö?
     private void piirräKasviRuoka (int i, int j, double ruutuKoko, double ruoka) {
+        if (ruoka < 0) {
+            ruoka = 0;
+        }
         Color ruokaColor = Color.rgb(20, 200, 20, ruoka);
         gc.setFill(ruokaColor);
         gc.fillRect(i*(ruutuKoko), j*(ruutuKoko), ruutuKoko, ruutuKoko);

@@ -59,7 +59,7 @@ public class Kasvinsyoja extends Elain {
     }
     
     public boolean onkoOmassaRuudussaKasviruokaa() {
-        return this.getOmaRuutu().getKasviruoka() > 20;
+        return this.getOmaRuutu().getKasviruoka() > 0;
     }
     
     @Override
@@ -103,7 +103,7 @@ public class Kasvinsyoja extends Elain {
         for (int i = 0; i < 4; i++) {
             for (int j = skannauksenAloitus; j < Math.abs(skannauksenAloitus) + 1; j++) {
                 for (int k = skannauksenAloitus; k < Math.abs(skannauksenAloitus) + 1; k++) {
-                    if (ruudut[oma.getxKoord() + j][oma.getyKoord() + k].getKasviruoka() > 20) {
+                    if (ruudut[oma.getxKoord() + j][oma.getyKoord() + k].getKasviruoka() > 0) {
                         if (ruudut[oma.getxKoord() + j][oma.getyKoord() + k].getElaimet().size() > 0) {
                             vara = ruudut[oma.getxKoord() + j][oma.getyKoord() + k];
                         } else {

@@ -83,7 +83,9 @@ public class LaumaKasvinsyoja extends Lauma {
             for (int j = -this.getAlueenKoko(); j < this.getAlueenKoko() + 1; j++) {
                 int xKoord = x + i;
                 int yKoord = y + j;
-                maara += this.getKontrolleri().getKartta().getRuudut()[xKoord][yKoord].getKasviruoka();
+                if (this.getKontrolleri().getKartta().getRuudut()[xKoord][yKoord].getKasviruoka() > 0) {
+                    maara += this.getKontrolleri().getKartta().getRuudut()[xKoord][yKoord].getKasviruoka();
+                }
             }
         }
         return maara;

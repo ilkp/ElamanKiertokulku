@@ -7,6 +7,7 @@ import elämänkiertokulku.simulaatio.LaumaKasvinsyoja;
 import java.util.TimerTask;
 
 import elämänkiertokulku.gui.Gui;
+import elämänkiertokulku.simulaatio.Elain;
 
 public class TimerAjo extends TimerTask {
     private final Kontrolleri kontrolleri;
@@ -41,6 +42,12 @@ public class TimerAjo extends TimerTask {
             this.kontrolleri.tikkaa();
             System.out.println(this.kontrolleri.getTick());
             kontrolleri.ajaRuudut();
+            
+            for (Elain jasen : lauma.getJasenet()) {
+                System.out.println("id: "+jasen.getId());
+                System.out.println("Tavoite: "+jasen.getTavoite());
+                System.out.println("Tavoiteruutu x: "+jasen.getTavoiteRuutu().getxKoord()+ " y: "+jasen.getTavoiteRuutu().getyKoord());
+            }
         } catch (Exception e) {
             
         }
