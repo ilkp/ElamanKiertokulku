@@ -118,7 +118,7 @@ public class Gui extends Application {
         pause.setLayoutX(40);
         pause.setLayoutY(30);
         pause.setOnAction((ActionEvent event) -> {
-            pause();
+            //pause();
         });
         controlPane.getChildren().add(pause);
     }
@@ -129,7 +129,7 @@ public class Gui extends Application {
         play.setLayoutX(180);
         play.setLayoutY(30);
         play.setOnAction((ActionEvent event) -> {
-            play();
+            //play();
         });
         controlPane.getChildren().add(play);
     }
