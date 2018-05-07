@@ -178,9 +178,9 @@ public class Gui extends Application {
                 if (!kartta.getRuudut()[i][j].getElaimet().isEmpty()) {
                     piirräKasvisEläin (i, j, ruutuKoko);
                 }
-//                if (!kartta.getRuudut()[i][j].getLaumat().isEmpty()) {
-//                    debugPiirräLauma (i, j, ruutuKoko);
-//                }
+                if (!kartta.getRuudut()[i][j].getLaumat().isEmpty()) {
+                    debugPiirräLauma (i, j, ruutuKoko);
+                }
             }
         }
     }
