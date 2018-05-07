@@ -70,7 +70,8 @@ public class Elain extends Liikuteltava {
     public void tapaElain() {
         this.getOmaRuutu().lisaaLiharuoka(100);
         this.omaLauma.siirraPoistettaviin(this);
-        this.getOmaRuutu().getElaimet().remove(this);
+        this.getOmaRuutu().poistaElain(this);
+        this.setOmaRuutu(null);
         System.out.println(this.getId()+" kuoli");
     }
     
@@ -87,16 +88,6 @@ public class Elain extends Liikuteltava {
             this.ruokatilanne += muutos;
         } else {
             this.ruokatilanne = 0;
-        }
-    }
-    
-    public void lisaanny(Elain elain) {
-        if (elain.getLauma() == this.getLauma() && elain.getOmaRuutu()== this.getOmaRuutu()&& elain.getTavoite() == ElaimenTavoite.LISAANNY) {
-            int nopeusMutaatio = this.getKontrolleri().getRandom().nextInt(3) - 1;
-            int jalkelaisenNopeus = (int)(this.getNopeus() + elain.getNopeus()) / 2 + nopeusMutaatio;
-            this.getLauma().lisaaJasen(new Kasvinsyoja(this.getKontrolleri(), this.getKontrolleri().seuraavaId(), jalkelaisenNopeus, this.getOmaRuutu(), this.getLauma()));
-            this.ruokatilanne = 0;
-            elain.setRuokatilanne(0);
         }
     }
     

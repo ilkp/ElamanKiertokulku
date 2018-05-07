@@ -3,6 +3,8 @@ package elämänkiertokulku;
 
 import elämänkiertokulku.gui.Gui;
 import elämänkiertokulku.kontrolleri.TimerAjo;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.application.Application;
@@ -11,7 +13,6 @@ import javafx.application.Application;
 public class ElämänKiertokulkuTesti {
     
     public static void main(String[] args) throws InterruptedException {
-        
         //GUI ei toimi jos yrittää ajaa täältä ainaki
         //toistaseks pitää käynnistää ohjelma gui luokasta!!!
         //
