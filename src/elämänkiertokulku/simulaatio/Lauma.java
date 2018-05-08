@@ -86,12 +86,13 @@ public class Lauma extends Liikuteltava {
         int jalkelaisenNopeus = (int)(elain1.getNopeus() + elain2.getNopeus()) / 2 + nopeusMutaatio;
         Elain uusi = null;
         if (elain1.getClass() == Kasvinsyoja.class) {
-            uusi = new Kasvinsyoja(this.getKontrolleri(), this.getKontrolleri().seuraavaId(), jalkelaisenNopeus, elain1.getOmaRuutu(), elain1.getLauma());
+            uusi = new Kasvinsyoja(this.getKontrolleri(), this.getKontrolleri().seuraavaId(), jalkelaisenNopeus, elain1.getOmaRuutu(), this);
         } else {
-            uusi = new Lihansyoja(this.getKontrolleri(), this.getKontrolleri().seuraavaId(), jalkelaisenNopeus, elain1.getOmaRuutu(), elain1.getLauma());
+            uusi = new Lihansyoja(this.getKontrolleri(), this.getKontrolleri().seuraavaId(), jalkelaisenNopeus, elain1.getOmaRuutu(), this);
         }
         elain1.getOmaRuutu().lisaaElain(uusi);
-        uusi.setRuokatilanne(0);
+        uusi.setRuokatilanne(1);
+        this.uudet.add(uusi);
     }
     
     public void siirraUudet() {

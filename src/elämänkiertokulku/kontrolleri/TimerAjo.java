@@ -37,7 +37,6 @@ public class TimerAjo extends TimerTask {
     public void run() {
         //try {
             kontrolleri.ajaLaumat();
-            Lauma lauma = (Lauma) kontrolleri.getLaumat().get(0);
             gui.piirräKartta();
             this.kontrolleri.tikkaa();
             System.out.println(this.kontrolleri.getTick());

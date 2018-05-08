@@ -22,16 +22,21 @@ public class Kasvinsyoja extends Elain {
                     break;
                 case LISAANNY:
                     List<Elain> ruudunElaimet = this.getOmaRuutu().getElaimet();
+                    boolean lisaantyja = false;
                     for (Elain elain : ruudunElaimet) {
                         if (elain != this && elain.getLauma() == this.getLauma() && elain.getRuokatilanne() > 80) {
                             this.getLauma().lisaaUusiJasen(this, elain);
-                            this.setRuokatilanne(0);
-                            elain.setRuokatilanne(0);
+                            this.setRuokatilanne(1);
+                            elain.setRuokatilanne(1);
+                            lisaantyja = true;
                             break;
                         }
                     }
-                    loydaLisaantyja();
-                    this.liiku();
+                    if (lisaantyja == false) {
+                        loydaLisaantyja();
+                        this.liiku();
+                        break;
+                    }
                     break;
                 case SYO:
                     this.syo();
